@@ -1,0 +1,15 @@
+{
+	"assetGUID": "f1e64bd8-be7a-d12f-9a43-65862bc2040c",
+	"layer": "segment",
+	"time": 0,
+	"timestamp": {
+		"absolute": "2016-03-02T12:00:00.000+0000"
+	},
+	"duration": 2188.0,
+	"segment": {
+		"segmentGUID": "f1e64bd8-be7a-d12f-9a43-65862bc2040c",
+		"segmentType": "SOFT",
+		"shortDescription": "undefined",
+		"longDescription": "undefined"
+	}
+}

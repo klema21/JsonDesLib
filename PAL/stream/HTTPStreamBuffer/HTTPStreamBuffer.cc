@@ -1,0 +1,41 @@
+#include "HTTPStreamBuffer.h"
+
+HTTPStreamBuffer::HTTPStreamBuffer(const char* src) {
+	m_rqst.setUrl(src);
+	auto p = HTTPClientFactory::makeHTTPClient();
+	p->sendRequest(m_rqst, m_rsp);
+	m_size = sizeof(m_rsp.getData());
+	m_buff = new char[m_size];
+	std::string tmp = m_rsp.getData();
+	std::copy(tmp.begin(), tmp.end(), m_buff);
+}
+
+HTTPStreamBuffer::HTTPStreamBuffer(const char* src, std::size_t size) {
+
+}
+
+HTTPStreamBuffer::~HTTPStreamBuffer() {
+	delete m_buff;
+}
+
+std::size_t HTTPStreamBuffer::read(uint8_t* dst, size_t size) {
+	if (m_curr < m_size) {
+		auto length = (m_curr + size) < m_size ? m_curr + size : m_size;
+		std::copy(m_buff + m_curr, m_buff + length, dst + m_curr);
+		m_curr = length;
+		return length;
+	}
+	return 0;
+}
+
+void HTTPStreamBuffer::reset() {
+	m_curr = 0;
+}
+
+std::size_t HTTPStreamBuffer::available() const {
+	return m_size - m_curr;
+}
+
+std::size_t HTTPStreamBuffer::total() const {
+	return m_size;
+}
