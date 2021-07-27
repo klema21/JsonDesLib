@@ -1,5 +1,5 @@
 #ifndef TESTRUNNER_H
-#define TESTRUNNET_H
+#define TESTRUNNER_H
 
 #include "objects/Object.h"
 #include "objects/Object2.h"
