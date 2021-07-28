@@ -3,13 +3,13 @@ if(WIN32)
 		include/StreamFactory.cc 
 		JSON/rapidjson/Parser.cc
 		stream/streamBuffer/StreamBuffer.cc
-		stream/HTTPStreamBuffer/HTTPWINClientFactory.cc
+		HTTPClient/HTTPWINClientFactory.cc
 		stream/HTTPStreamBuffer/HTTPStreamBuffer.cc)
 endif(WIN32)
 
 if(UNIX)
 	add_library(PAL JSON/rapidjson/Parser.cc
-		stream/HTTPStreamBuffer/HTTPClientFactory.cc
+		HTTPClient/HTTPClientFactory.cc
 		stream/HTTPStreamBuffer/HTTPStreamBuffer.cc
 		include/ParserFactory.cc
 		include/StreamFactory.cc

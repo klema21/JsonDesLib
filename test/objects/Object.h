@@ -51,7 +51,7 @@ void Object::setValue(const std::string& name, double value) {
 	}
 }
 
-ISerializable& Object::getObject(const std::string& name) {
+JSDL::ISerializable& Object::getObject(const std::string& name) {
 	if (name == "timestamp")
 		return timestp;
 	else if (name == "segment")

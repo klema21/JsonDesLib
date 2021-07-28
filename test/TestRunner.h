@@ -13,7 +13,7 @@ public:
 };
 
 void TestRunner::runVisualTests() const {
-	Engine e;
+	JSDL::Engine e;
 	// Test - 0 ----------------------------------------------------------------
 	// Big obj fills with big file
 	const char* test0 = "ip.jsontest.com";

@@ -1,10 +1,10 @@
 #include "StreamBuffer.h"
 
-StreamBuffer::StreamBuffer() {
+PAL::StreamBuffer::StreamBuffer() {
 	initializeZeroBuff();
 }
 
-StreamBuffer::StreamBuffer(const char* src) {
+PAL::StreamBuffer::StreamBuffer(const char* src) {
 	if (src == nullptr) {
 		initializeZeroBuff();
 	} else {
@@ -12,7 +12,7 @@ StreamBuffer::StreamBuffer(const char* src) {
 	}
 }
 
-StreamBuffer::StreamBuffer(const char* src, std::size_t size) {
+PAL::StreamBuffer::StreamBuffer(const char* src, std::size_t size) {
 	if (src == nullptr) {
 		initializeZeroBuff();
 	} else {
@@ -20,14 +20,14 @@ StreamBuffer::StreamBuffer(const char* src, std::size_t size) {
 	}
 }
 
-StreamBuffer::StreamBuffer(const StreamBuffer& source) {
+PAL::StreamBuffer::StreamBuffer(const StreamBuffer& source) {
 	std::size_t size = strlen(source.m_buff + 1);
 	delete m_buff; 
 	m_buff = nullptr;
 	initializeNewBuff(size, source.m_buff);
 }
 
-std::size_t StreamBuffer::read(uint8_t* dst, size_t size) {
+std::size_t PAL::StreamBuffer::read(uint8_t* dst, size_t size) {
 	if (m_curr < m_size) {
 		auto length = (m_curr + size) < m_size ? m_curr + size : m_size;
 		std::copy(m_buff + m_curr, m_buff + length, dst + m_curr);
@@ -37,30 +37,30 @@ std::size_t StreamBuffer::read(uint8_t* dst, size_t size) {
 	return 0;
 }
 
-void StreamBuffer::reset() {
+void PAL::StreamBuffer::reset() {
 	m_curr = 0;
 }
 
-void StreamBuffer::initializeZeroBuff() {
+void PAL::StreamBuffer::initializeZeroBuff() {
 	m_buff = new char[1];
 	m_buff[0] = '\0';
 	m_size = 0;
 }
 
-void StreamBuffer::initializeNewBuff(std::size_t size, const char* src) {
+void PAL::StreamBuffer::initializeNewBuff(std::size_t size, const char* src) {
 	m_size = size;
 	m_buff = new char[m_size];
 	std::copy(src, src+m_size, m_buff);
 }
 
-std::size_t StreamBuffer::available() const {
+std::size_t PAL::StreamBuffer::available() const {
 	return m_size - m_curr;
 }
 
-std::size_t StreamBuffer::total() const {
+std::size_t PAL::StreamBuffer::total() const {
 	return m_size;
 }
 
-StreamBuffer::~StreamBuffer() {
+PAL::StreamBuffer::~StreamBuffer() {
 	delete m_buff;
 }

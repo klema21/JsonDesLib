@@ -14,15 +14,17 @@
 
 #include "ISerializable.h"
 
-class Engine {
-public:
-	/**
-	* Deserialize user`s object with transmitted data.
-	*
-	* @param values JSON string data.
-	* @param values user`s object that would be filled with JSON string data
-	*/
-	void deserialize(const char* uri, ISerializable& d);
-};
+namespace JSDL {
+	class Engine {
+	public:
+		/**
+		* Deserialize user`s object with transmitted data.
+		*
+		* @param values JSON string data.
+		* @param values user`s object that would be filled with JSON string data
+		*/
+		void deserialize(const char* uri, ISerializable& d);
+	};
+}
 
 #endif

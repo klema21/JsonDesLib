@@ -2,8 +2,8 @@
 #include "../library/EngineImpl.h"
 #include "ISerializable.h"
 
-EngineImpl holder;
+JSDL::EngineImpl holder;
 
-void Engine::deserialize(const char* uri, ISerializable& d) {
+void JSDL::Engine::deserialize(const char* uri, ISerializable& d) {
 	holder.deserialize(uri, d);
 }

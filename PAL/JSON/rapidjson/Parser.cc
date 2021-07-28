@@ -1,6 +1,6 @@
 #include "Parser.h"
 
-void Parser::parseStream(std::shared_ptr<JDLS::IStream> is, IEngine* e) {
+void PAL::Parser::parseStream(std::shared_ptr<PAL::IStream> is, JSDL::IEngine* e) {
 	Handler h = Handler(e);
 	rapidjson::Reader read;
 	auto jsonLen = is->available();

@@ -51,7 +51,7 @@ public:
 		}
 	}
 
-	ISerializable& getObject(const std::string& name) {
+	JSDL::ISerializable& getObject(const std::string& name) {
 		if (name == "legacyIds") {
 			return legacy;
 		}

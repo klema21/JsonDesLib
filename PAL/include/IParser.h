@@ -18,19 +18,21 @@
 /*
 	Engine-related interface for inheriting new parsers.
 */
-class IParser{
-public:
-	/**
-	* Parses a JSON from a stream.
-	*
-	* @param values stream data that containing characters of string type.
-	* @param values engine interface to publish events from handler to engine.
-	*/
-	virtual void parseStream(std::shared_ptr<JDLS::IStream> is, IEngine* e) = 0;
-	/**
-	* Deleting a derived class object using a pointer to a base class.
-	*/
-	virtual ~IParser() {};
-};
+namespace PAL {
+	class IParser {
+	public:
+		/**
+		* Parses a JSON from a stream.
+		*
+		* @param values stream data that containing characters of string type.
+		* @param values engine interface to publish events from handler to engine.
+		*/
+		virtual void parseStream(std::shared_ptr<PAL::IStream> is, JSDL::IEngine* e) = 0;
+		/**
+		* Deleting a derived class object using a pointer to a base class.
+		*/
+		virtual ~IParser() {};
+	};
+}
 
 #endif

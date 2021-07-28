@@ -21,7 +21,7 @@
 #include <cstddef>
 #include <cstdint>
 
-namespace JDLS {
+namespace PAL {
 	class IStream {
 	public:
 		/**

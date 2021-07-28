@@ -4,9 +4,11 @@
 #include "../../PAL/include/AbstractFactory.h"
 #include "../JSON/rapidjson/Parser.h"
 
-class ParserFactory : public AbstractFactory{
-public:
-	static std::shared_ptr<IParser> makeParser();
-};
+namespace PAL {
+	class ParserFactory : public PAL::AbstractFactory {
+	public:
+		static std::shared_ptr<PAL::IParser> makeParser();
+	};
+}
 
 #endif
