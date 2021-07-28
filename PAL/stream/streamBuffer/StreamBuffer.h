@@ -2,6 +2,7 @@
 #define STREAMBUFFER_H
 
 #include <string>
+#include <cstring>
 #include <algorithm>
 #include <iostream>
 #include <stack>

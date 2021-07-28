@@ -3,8 +3,7 @@
 
 #include <memory>
 #include <functional>
-#include "CURLHTTP.h"
-#include "WINHTTP.H"
+#include "IHTTPClient.h"
 
 class HTTPClientFactory {
 public:

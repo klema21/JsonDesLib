@@ -8,8 +8,8 @@
 
 class AbstractFactory {
 public:
-	virtual std::shared_ptr<IParser> makeParser() = 0;
-	virtual std::shared_ptr<JDLS::IStream> makeStream(const char* uri) = 0;
+//	virtual std::shared_ptr<IParser> makeParser() = 0;
+//	virtual std::shared_ptr<JDLS::IStream> makeStream(const char* uri) = 0;
 	static  std::function<std::shared_ptr<IParser>()> createParser;
 	static  std::function<std::shared_ptr<JDLS::IStream>(const char*)> createStream;
 	virtual ~AbstractFactory() {};

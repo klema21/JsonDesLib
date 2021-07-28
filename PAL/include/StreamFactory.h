@@ -8,7 +8,6 @@
 class StreamFactory : public AbstractFactory {
 public:
 	static std::shared_ptr<JDLS::IStream> makeStream(const char* uri);
-	static std::function<std::shared_ptr<JDLS::IStream>(const char*)> createStream;
 };
 
 #endif

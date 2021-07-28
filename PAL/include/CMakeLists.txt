@@ -1,1 +1,0 @@
-#add_library(PAL/include ParserFactory.cc StreamFactory.cc)
