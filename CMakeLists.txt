@@ -12,7 +12,7 @@ endif (UNIX)
 
 # configure a header file to pass some of the CMake settings
 # to the source code
-configure_file(Config.h.in Config.h.in)
+#configure_file(Config.h.in Config.h.in)
 
 # set the project name
 project(JsonDesLib)
