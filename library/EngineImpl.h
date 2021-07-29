@@ -3,7 +3,8 @@
 
 #include "IEngine.h"
 #include "../include/ISerializable.h"
-#include "../PAL/include/AbstractFactory.h"
+#include "../PAL/include/factories/ParserFactory.h"
+#include "../PAL/include/factories/StreamFactory.h"
 #include <stack>
 
 namespace JSDL {
@@ -11,10 +12,10 @@ namespace JSDL {
 		std::stack<std::reference_wrapper<ISerializable>> data{};
 	public:
 		void deserialize(const char* uri, ISerializable& d);
-		void newValue(const std::string& name, std::string value);
-		void newValue(const std::string& name, bool value);
-		void newValue(const std::string& name, int value);
-		void newValue(const std::string& name, double value);
+		void newValue( const std::string& name, std::string value);
+		void newValue( const std::string& name, bool value);
+		void newValue( const std::string& name, int value);
+		void newValue( const std::string& name, double value);
 		void newObject(const std::string& name);
 		void endObject();
 	};

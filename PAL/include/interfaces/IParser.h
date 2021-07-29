@@ -12,8 +12,8 @@
 // of this software for any purpose. It is provided "as is" without 
 // express or implied warranty.
 
-#include "../../library/IEngine.h"
-#include "../../PAL/include/IStream.h"
+#include "../../../library/IEngine.h"
+#include "IStream.h"
 #include <memory>
 /*
 	Engine-related interface for inheriting new parsers.

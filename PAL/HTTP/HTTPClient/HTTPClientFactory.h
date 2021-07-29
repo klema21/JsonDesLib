@@ -3,13 +3,13 @@
 
 #include <memory>
 #include <functional>
-#include "IHTTPClient.h"
+#include "../../include/interfaces/IHTTPClient.h"
 
 namespace PAL {
 	class HTTPClientFactory {
 	public:
 		static std::shared_ptr<PAL::IHTTPClient> makeHTTPClient();
-		static std::function<std::shared_ptr<PAL::IHTTPClient>> createHTTPClient;
+		static std::function<std::shared_ptr<PAL::IHTTPClient>()> createHTTPClient;
 	};
 }
 

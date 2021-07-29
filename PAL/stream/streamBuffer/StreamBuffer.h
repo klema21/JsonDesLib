@@ -7,7 +7,7 @@
 #include <iostream>
 #include <stack>
 
-#include "../../../PAL/include/IStream.h"
+#include "../../../PAL/include/interfaces/IStream.h"
 
 /*
 	The main task of the stream buffer is transport of characters to and from this external device, and buffering of these characters in an internal buffer.

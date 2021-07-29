@@ -1,7 +1,7 @@
 #ifndef CURLHTTP_H
 #define CURLHTTP_H
 
-#include "IHTTPClient.h"
+#include "../../include/interfaces/IHTTPClient.h"
 #include <curl/curl.h>
 
 size_t writeFunction(void *ptr, 

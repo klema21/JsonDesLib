@@ -1,7 +1,7 @@
 #ifndef PARSER_H
 #define PARSER_H
 
-#include "../../include/IParser.h"
+#include "../../include/interfaces/IParser.h"
 
 #include "../../../3rdparty/rapidjson/reader.h"
 #include "../../../3rdparty/rapidjson/writer.h"

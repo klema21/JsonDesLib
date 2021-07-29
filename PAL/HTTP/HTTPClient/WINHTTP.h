@@ -1,11 +1,11 @@
 #ifndef WINHTTP_H
 #define WINHTTP_H
 
-#include "IHTTPClient.h"
+#include "../../include/interfaces/IHTTPClient.h"
 #include <algorithm>
 
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
-#include <string.h>
+#include <string>
 #include <winsock2.h>
 #include <windows.h>
 #include <iostream>
@@ -17,31 +17,39 @@
 namespace PAL {
 	class WINHTTP : public IHTTPClient {
 	public:
-		void sendRequest(Request& rq, Response& rs) {
+		std::string sendRequest(Request& rq, Response& rs) {
 			get_Website(rq.getUrl());
-			rs.setData(response_data);
+			rs.setStatus(response_status);
 			rs.setHeader(response_header);
+			rs.setData(response_data);
+			return m_status;
 		}
 
 		void get_Website(std::string url) {
 			get_http = "GET / HTTP/1.1\r\nHost: " + url + "\r\nConnection: close\r\n\r\n";
 
 			if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
-				std::cout << "WSAStartup failed.\n";
+				m_status += "WSAStartup failed.\n";
+				m_status += std::system_category().message(WSAGetLastError());
 				system("pause");
-				//return 1;
+				return;
 			}
 
 			Socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 			host = gethostbyname(url.c_str());
+			if (host == nullptr) {
+				m_status += std::system_category().message(WSAGetLastError());
+				return;
+			}
 			SockAddr.sin_port = htons(80);
 			SockAddr.sin_family = AF_INET;
 			SockAddr.sin_addr.s_addr = *((unsigned long*)host->h_addr);
 
 			if (connect(Socket, (SOCKADDR*)(&SockAddr), sizeof(SockAddr)) != 0) {
-				std::cout << "Could not connect";
+				m_status += "Could not connect.\n";
+				m_status += std::system_category().message(WSAGetLastError());
 				system("pause");
-				//return 1;
+				return;
 			}
 			send(Socket, get_http.c_str(), strlen(get_http.c_str()), 0);
 
@@ -52,19 +60,24 @@ namespace PAL {
 					response_header += buffer[i];
 					i += 1;
 				}
-				std::size_t found = response_header.find(cl);
-				response_data = response_header;
-				response_data.erase(0, found + 17);
-				response_header.erase(found + 17, response_header.size());
+				response_status.assign(response_header, 0, response_header.find('\n'));
+				response_header.erase(0, response_header.find('\n'));
+				response_data.assign(response_header,
+					response_header.find("\r\n\r\n"),
+					response_header.size());
+				response_header.erase(
+					response_header.find("\r\n\r\n"),
+					response_header.size());
 			}
 			closesocket(Socket);
 			WSACleanup();
+			m_status += "Successful sending of data";
 		}
 
 	private:
 		std::string response_data;
 		std::string response_header;
-		std::string cl = "Connection: close";
+		std::string response_status;
 		std::locale local;
 		char buffer[10000];
 		int i = 0;
@@ -75,6 +88,7 @@ namespace PAL {
 		int rowCount = 0;
 		struct hostent *host;
 		std::string get_http;
+		std::string m_status;
 	};
 }
 

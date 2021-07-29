@@ -1,11 +1,11 @@
 #ifndef HTTPSTREAMBUFFER_H
 #define HTTPSTREAMBUFFER_H
 
-#include "../../../PAL/include/IStream.h"
-#include "../../HTTPClient/IHTTPClient.h"
-#include "../../HTTPClient/HTTPClientFactory.h"
-#include "../../HTTPClient/Request.h"
-#include "../../HTTPClient/Response.h"
+#include "../../../PAL/include/interfaces/IStream.h"
+#include "../../include/interfaces/IHTTPClient.h"
+#include "../../HTTP/HTTPClient/HTTPClientFactory.h"
+#include "../../HTTP/HTTPClient/Request.h"
+#include "../../HTTP/HTTPClient/Response.h"
 #include <algorithm>
 
 typedef std::function<int(int)> callbackFunct;

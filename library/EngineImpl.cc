@@ -2,8 +2,8 @@
 
 void JSDL::EngineImpl::deserialize(const char* uri, ISerializable& d) {
 	data.push(d);
-	auto p = PAL::AbstractFactory::createParser();
-	auto s = PAL::AbstractFactory::createStream(uri);
+	auto p = PAL::ParserFactory::createParser();
+	auto s = PAL::StreamFactory::createStream(uri);
 	p->parseStream(s, this);
 }
 

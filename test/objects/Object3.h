@@ -4,6 +4,7 @@
 #include "ObjectBase.h"
 #include <string>
 
+#include <iostream>
 class Object3 : public ObjectBase {
 	std::string ip;
 public:
@@ -12,7 +13,7 @@ public:
 		std::cout << "ip: " << ip << std::endl;
 	}
 	void setValue(const std::string& name, std::string value) {
-		if (name == "ip")
+		if (name == "date")
 			ip = value;
 	}
 };

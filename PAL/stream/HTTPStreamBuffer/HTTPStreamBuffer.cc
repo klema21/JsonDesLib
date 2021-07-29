@@ -2,10 +2,9 @@
 
 PAL::HTTPStreamBuffer::HTTPStreamBuffer(const char* src) {
 	m_rqst.setUrl(src);
-	auto p = HTTPClientFactory::makeHTTPClient();
-	p->sendRequest(m_rqst, m_rsp);
-	//auto status = p->sendRequest(m_rqst, m_rsp);
-	m_size = sizeof(m_rsp.getData());
+	auto p = HTTPClientFactory::createHTTPClient();
+	std::string status = p->sendRequest(m_rqst, m_rsp);
+	m_size = m_rsp.getData().size();
 	m_buff = new char[m_size];
 	std::string tmp = m_rsp.getData();
 	std::copy(tmp.begin(), tmp.end(), m_buff);
