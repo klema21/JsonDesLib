@@ -6,7 +6,7 @@ if (WIN32)
 endif (WIN32)
 
 if (UNIX)
-#	add_compile_options(-Wall -Wextra -pedantic -Werror)
+	add_compile_options(-Wall -Wextra -pedantic) # -Werror
 	option(CURL "Use libcurl" ON)
 endif (UNIX)
 

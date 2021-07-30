@@ -51,6 +51,8 @@ namespace PAL {
 					_e->newValue(name_, static_cast<std::string>(str));
 					state_ = kExpectedKey;
 					return true;
+				default:
+					break;
 				};
 				return true;
 			}
@@ -64,6 +66,8 @@ namespace PAL {
 				case kArrayStarted:
 					_e->newValue(name_, i);
 					return true;
+				default:
+					break;
 				}
 				return true;
 			}
@@ -77,6 +81,8 @@ namespace PAL {
 				case kArrayStarted:
 					_e->newValue(name_, static_cast<int>(u));
 					return true;
+				default:
+					break;
 				}
 				return true;
 			}
@@ -86,6 +92,8 @@ namespace PAL {
 					_e->newValue(name_, d);
 					state_ = kExpectedKey;
 					return true;
+				default:
+					break;
 				}
 				return true;
 			}
@@ -95,6 +103,8 @@ namespace PAL {
 					_e->newValue(name_, b);
 					state_ = kExpectedKey;
 					return true;
+				default:
+					break;
 				}
 				return true;
 			}
