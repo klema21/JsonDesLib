@@ -3,14 +3,28 @@
 PAL::HTTPStreamBuffer::HTTPStreamBuffer(const char* src) {
 	m_rqst.setUrl(src);
 	auto p = HTTPClientFactory::createHTTPClient();
-	std::string status = p->sendRequest(m_rqst, m_rsp);
-	if(status != "Successful sending of data")
-		std::cout << status << std::endl;
+	//std::string status = p->sendRequest(m_rqst, m_rsp);
+
+	ar = std::async(std::launch::async, [=]() {
+		std::string s = p->sendRequest(m_rqst, m_rsp);
+		return s;
+	});
+
+	std::string status = ar.get();
+
+	//std::cout << getTheResp() << std::endl;
+
+	/*if(status != "Successful sending of data")
+		std::cout << status << std::endl;*/
 	std::cout << m_rsp.getStatus() << std::endl;
 	m_size = m_rsp.getData().size();
 	m_buff = new char[m_size];
 	std::string tmp = m_rsp.getData();
 	std::copy(tmp.begin(), tmp.end(), m_buff);
+}
+
+std::string PAL::HTTPStreamBuffer::getTheResp() {
+	return ar.get();
 }
 
 PAL::HTTPStreamBuffer::~HTTPStreamBuffer() {

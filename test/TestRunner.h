@@ -5,6 +5,8 @@
 #include "objects/Object2.h"
 #include "objects/Object3.h"
 #include "Engine.h"
+#include "Timer.h"
+
 #include <fstream>
 
 class TestRunner {
@@ -17,17 +19,22 @@ void TestRunner::runVisualTests() const {
 	// Test - 0 ----------------------------------------------------------------
 	// Big obj fills with big file
 	//const char* test0 = "ip.jsontest.com";
-	const char* test0 = "date.jsontest.com";
-	//const char* test0 = "linkedin.com";
+	//const char* test0 = "date.jsontest.com";
+	const char* test0 = "linkedin.com";
 	//const char* test0 = "vk.com";
 	//const char* test0 = "rkn.gov.ru";
 	//const char* test0 = "example.com";
 	//const char* test0 = "abc";
 
+	Timer t;
 	for (int i = 0; i < 10; ++i) {
+		std::cout << "test runner = " << i << std::endl;
 		Object3 ob0;
+		//e.onResult([&](Result res) {if (res) {} esle {}});
 		e.deserialize(test0, ob0);
 	}
+	t.stop("Test 1");
+
 	// Test - 1 ----------------------------------------------------------------
 	// Big obj fills with big file
 	/*std::string line, text;

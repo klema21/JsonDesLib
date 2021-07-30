@@ -7,6 +7,7 @@
 #include "../../HTTP/HTTPClient/Request.h"
 #include "../../HTTP/HTTPClient/Response.h"
 #include <algorithm>
+#include <future>
 
 typedef std::function<int(int)> callbackFunct;
 
@@ -20,6 +21,7 @@ namespace PAL {
 		void reset();
 		std::size_t available() const;
 		std::size_t total() const;
+		std::string getTheResp();
 
 	private:
 		std::size_t m_size{ 0 };
@@ -28,6 +30,7 @@ namespace PAL {
 		Request m_rqst;
 		Response m_rsp;
 		callbackFunct f;
+		std::future<std::string> ar;
 	};
 }
 
