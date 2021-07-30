@@ -9,7 +9,7 @@ public:
 	void Print() {
 		std::cout << "absolute: " << absolute << std::endl;
 	}
-	void setValue(const std::string& name, std::string value) {
+	void setValue(const std::string& name, const std::string& value) {
 		if (name == "absolute") {
 			absolute = value;
 		}

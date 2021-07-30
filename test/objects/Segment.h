@@ -30,7 +30,7 @@ public:
 		std::cout << "	 shortDescription: " << shortDescription << std::endl;
 		std::cout << "	 longDescription: " << longDescription << std::endl;
 	}
-	void setValue(const std::string& name, std::string value) {
+	void setValue(const std::string& name, const std::string& value) {
 		if (name == "segmentGUID") {
 			segmentGUID = value;
 		}
@@ -45,7 +45,7 @@ public:
 		}
 	}
 
-	void setValue(const std::string& name, int value) {
+	void setValue(const std::string& name, const int& value) {
 		if (name == "restaurants") {
 			restaurants.push_back(value);
 		}

@@ -28,28 +28,28 @@ namespace JSDL {
 		* @param values string data of JSON name.
 		* @param values string data of JSON value.
 		*/
-		virtual void setValue(const std::string& name, std::string value) = 0;
+		virtual void setValue(const std::string& name, const std::string& value) = 0;
 		/**
 		* Setting a bool value in an object field.
 		*
 		* @param values string data of JSON name.
 		* @param values bool data of JSON value.
 		*/
-		virtual void setValue(const std::string& name, bool value) = 0;
+		virtual void setValue(const std::string& name, const bool& value) = 0;
 		/**
 		* Setting an int value in an object field.
 		*
 		* @param values string data of JSON name.
 		* @param values integer data of JSON value.
 		*/
-		virtual void setValue(const std::string& name, int value) = 0;
+		virtual void setValue(const std::string& name, const int& value) = 0;
 		/**
 		* Setting a double value in an object field.
 		*
 		* @param values JSON name string data.
 		* @param values double data type of JSON value.
 		*/
-		virtual void setValue(const std::string& name, double value) = 0;
+		virtual void setValue(const std::string& name, const double& value) = 0;
 		/**
 		* Return a requesting object by name.
 		*

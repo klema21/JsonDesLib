@@ -14,7 +14,7 @@ public:
 		std::cout << "\t\t\t" << "phone: " << phone << std::endl;
 		std::cout << "\n";
 	}
-	void setValue(const std::string& name, std::string value) {
+	void setValue(const std::string& name, const std::string& value) {
 		if (name == "location") {
 			location = value;
 		}

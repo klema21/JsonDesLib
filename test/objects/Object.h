@@ -14,9 +14,9 @@ class Object : public ObjectBase {
 	Segment segment;
 public:
 	~Object();
-	void setValue(const std::string& name, std::string value);
-	void setValue(const std::string& name, int value);
-	void setValue(const std::string& name, double value);
+	void setValue(const std::string& name, const std::string& value);
+	void setValue(const std::string& name, const int& value);
+	void setValue(const std::string& name, const double& value);
 	ISerializable& getObject(const std::string& name);
 };
 
@@ -30,7 +30,7 @@ Object::~Object() {
 	std::cout << "Segment: "; segment.print();
 }
 
-void Object::setValue(const std::string& name, std::string value) {
+void Object::setValue(const std::string& name, const std::string& value) {
 	if (name == "assetGUID") {
 		assetGUID = value;
 	}
@@ -39,13 +39,13 @@ void Object::setValue(const std::string& name, std::string value) {
 	}
 }
 
-void Object::setValue(const std::string& name, int value) {
+void Object::setValue(const std::string& name, const int& value) {
 	if (name == "time") {
 		time = value;
 	}
 }
 
-void Object::setValue(const std::string& name, double value) {
+void Object::setValue(const std::string& name, const double& value) {
 	if (name == "duration") {
 		duration = value;
 	}

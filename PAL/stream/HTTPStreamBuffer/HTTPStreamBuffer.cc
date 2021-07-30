@@ -13,10 +13,6 @@ PAL::HTTPStreamBuffer::HTTPStreamBuffer(const char* src) {
 	std::copy(tmp.begin(), tmp.end(), m_buff);
 }
 
-PAL::HTTPStreamBuffer::HTTPStreamBuffer(const char* src, std::size_t size) {
-
-}
-
 PAL::HTTPStreamBuffer::~HTTPStreamBuffer() {
 	delete m_buff;
 }

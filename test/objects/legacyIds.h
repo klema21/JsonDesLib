@@ -9,7 +9,7 @@ public:
 	void Print() {
 		std::cout << "shortId: " << shortId << std::endl;
 	}
-	void setValue(const std::string& name, std::string value) {
+	void setValue(const std::string& name, const std::string& value) {
 		if (name == "shortId") {
 			shortId = value;
 		}

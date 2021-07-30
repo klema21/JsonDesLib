@@ -14,7 +14,6 @@ namespace PAL {
 	class HTTPStreamBuffer : public PAL::IStream {
 	public:
 		HTTPStreamBuffer(const char* src);
-		HTTPStreamBuffer(const char* src, std::size_t size);
 		~HTTPStreamBuffer();
 
 		std::size_t read(uint8_t* dst, size_t size);

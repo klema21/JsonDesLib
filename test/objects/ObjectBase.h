@@ -6,10 +6,10 @@
 
 class ObjectBase : public JSDL::ISerializable {
 public:
-	virtual void setValue(const std::string& name, std::string value) {}
-	virtual void setValue(const std::string& name, bool value) {}
-	virtual void setValue(const std::string& name, int value) {}
-	virtual void setValue(const std::string& name, double value) {}
+	virtual void setValue(const std::string& name, const std::string& value) {}
+	virtual void setValue(const std::string& name, const bool& value) {}
+	virtual void setValue(const std::string& name, const int& value) {}
+	virtual void setValue(const std::string& name, const double& value) {}
 	virtual JSDL::ISerializable& getObject(const std::string& name) { return *this; }
 	virtual ~ObjectBase() {}
 };
