@@ -14,7 +14,7 @@ PAL::HTTPStreamBuffer::HTTPStreamBuffer(const char* src) {
 }
 
 PAL::HTTPStreamBuffer::~HTTPStreamBuffer() {
-	delete m_buff;
+	delete[] m_buff;
 }
 
 std::size_t PAL::HTTPStreamBuffer::read(uint8_t* dst, size_t size) {

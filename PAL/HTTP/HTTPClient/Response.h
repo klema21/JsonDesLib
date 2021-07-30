@@ -6,22 +6,22 @@
 namespace PAL {
 	class Response {
 	public:
-		void setHeader(std::string header) {
+		void setHeader(std::string& header) {
 			m_header = header;
 		}
-		void setData(std::string data) {
+		void setData(std::string& data) {
 			m_data = data;
 		}
-		void setStatus(std::string status) {
+		void setStatus(std::string& status) {
 			m_status = status;
 		}
-		std::string getHeader() {
+		std::string getHeader() const {
 			return m_header;
 		}
-		std::string getData() {
+		std::string getData() const {
 			return m_data;
 		}
-		std::string getStatus() {
+		std::string getStatus() const {
 			return m_status;
 		}
 	private:

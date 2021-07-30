@@ -9,5 +9,5 @@ void PAL::Parser::parseStream(std::shared_ptr<PAL::IStream> is, JSDL::IEngine* e
 	const char* tmp = reinterpret_cast<char*>(json);
 	rapidjson::StringStream ss(tmp);
 	read.Parse(ss, h);
-	delete json;
+	delete[] json;
 }

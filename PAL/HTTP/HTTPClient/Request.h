@@ -6,22 +6,22 @@
 namespace PAL {
 	class Request {
 	public:
-		void setHeader(std::string header) {
+		void setHeader(std::string& header) {
 			m_header = header;
 		}
 		void setUrl(const char* url) {
 			m_url = url;
 		}
-		void setMethod(std::string method) {
+		void setMethod(std::string& method) {
 			m_method = method;
 		}
-		std::string getHeader() {
+		std::string getHeader() const {
 			return m_header;
 		}
-		std::string getUrl() {
+		std::string getUrl() const {
 			return m_url;
 		}
-		std::string getMethod() {
+		std::string getMethod() const {
 			return m_method;
 		}
 	private:

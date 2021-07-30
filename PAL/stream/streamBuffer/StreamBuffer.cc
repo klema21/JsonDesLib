@@ -42,6 +42,7 @@ void PAL::StreamBuffer::reset() {
 }
 
 void PAL::StreamBuffer::initializeZeroBuff() {
+	delete m_buff;
 	m_buff = new char[1];
 	m_buff[0] = '\0';
 	m_size = 0;

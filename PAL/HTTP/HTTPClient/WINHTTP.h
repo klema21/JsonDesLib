@@ -7,6 +7,7 @@
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 #include <string>
 #include <winsock2.h>
+#include <ws2tcpip.h>
 #include <windows.h>
 #include <iostream>
 #include <vector>
@@ -25,7 +26,7 @@ namespace PAL {
 			return m_status;
 		}
 
-		void get_Website(std::string url, std::string method ) {
+		void get_Website(const std::string& url, const std::string& method ) {
 			get_http = method + " / HTTP/1.1\r\nHost: " + url + "\r\nConnection: close\r\n\r\n";
 
 			if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
@@ -36,6 +37,7 @@ namespace PAL {
 
 			Socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 			host = gethostbyname(url.c_str());
+
 			if (host == nullptr) {
 				m_status += "Could not connect to " + url + ".\n";
 				m_status += std::system_category().message(WSAGetLastError());
