@@ -27,7 +27,7 @@ namespace PAL {
 	private:
 		std::string m_header;
 		std::string m_url;
-		std::string m_method;
+		std::string m_method{ "GET" };
 	};
 }
 

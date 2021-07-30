@@ -24,23 +24,10 @@ void TestRunner::runVisualTests() const {
 	//const char* test0 = "example.com";
 	//const char* test0 = "abc";
 
-	Object3 ob0;
-	e.deserialize(test0, ob0);
-	// Test - 1 ----------------------------------------------------------------
-	Object3 ob1;
-	e.deserialize(test0, ob1);
-	// Test - 2 ----------------------------------------------------------------
-	Object3 ob2;
-	e.deserialize(test0, ob2);
-	// Test - 3 ----------------------------------------------------------------
-	Object3 ob3;
-	e.deserialize(test0, ob3);
-	// Test - 4 ----------------------------------------------------------------
-	Object3 ob4;
-	e.deserialize(test0, ob4);
-	// Test - 5 ----------------------------------------------------------------
-	Object3 ob5;
-	e.deserialize(test0, ob5);
+	for (int i = 0; i < 10; ++i) {
+		Object3 ob0;
+		e.deserialize(test0, ob0);
+	}
 	// Test - 1 ----------------------------------------------------------------
 	// Big obj fills with big file
 	/*std::string line, text;

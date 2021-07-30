@@ -18,15 +18,15 @@ namespace PAL {
 	class WINHTTP : public IHTTPClient {
 	public:
 		std::string sendRequest(Request& rq, Response& rs) {
-			get_Website(rq.getUrl());
+			get_Website(rq.getUrl(), rq.getMethod());
 			rs.setStatus(response_status);
 			rs.setHeader(response_header);
 			rs.setData(response_data);
 			return m_status;
 		}
 
-		void get_Website(std::string url) {
-			get_http = "GET / HTTP/1.1\r\nHost: " + url + "\r\nConnection: close\r\n\r\n";
+		void get_Website(std::string url, std::string method ) {
+			get_http = method + " / HTTP/1.1\r\nHost: " + url + "\r\nConnection: close\r\n\r\n";
 
 			if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
 				m_status += "WSAStartup failed.\n";
@@ -38,6 +38,7 @@ namespace PAL {
 			Socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 			host = gethostbyname(url.c_str());
 			if (host == nullptr) {
+				m_status += "Could not connect.\n";
 				m_status += std::system_category().message(WSAGetLastError());
 				return;
 			}
