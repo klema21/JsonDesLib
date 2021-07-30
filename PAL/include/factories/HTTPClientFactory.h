@@ -3,7 +3,7 @@
 
 #include <memory>
 #include <functional>
-#include "../../include/interfaces/IHTTPClient.h"
+#include "../interfaces/IHTTPClient.h"
 
 namespace PAL {
 	class HTTPClientFactory {

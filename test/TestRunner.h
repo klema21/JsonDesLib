@@ -16,8 +16,8 @@ void TestRunner::runVisualTests() const {
 	JSDL::Engine e;
 	// Test - 0 ----------------------------------------------------------------
 	// Big obj fills with big file
-	const char* test0 = "ip.jsontest.com";
-	//const char* test0 = "date.jsontest.com";
+	//const char* test0 = "ip.jsontest.com";
+	const char* test0 = "date.jsontest.com";
 	//const char* test0 = "linkedin.com";
 	//const char* test0 = "vk.com";
 	//const char* test0 = "rkn.gov.ru";

@@ -3,7 +3,7 @@
 
 #include "../../../PAL/include/interfaces/IStream.h"
 #include "../../include/interfaces/IHTTPClient.h"
-#include "../../HTTP/HTTPClient/HTTPClientFactory.h"
+#include "../../include/factories/HTTPClientFactory.h"
 #include "../../HTTP/HTTPClient/Request.h"
 #include "../../HTTP/HTTPClient/Response.h"
 #include <algorithm>

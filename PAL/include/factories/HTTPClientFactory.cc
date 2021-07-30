@@ -1,5 +1,5 @@
 #include "HTTPClientFactory.h"
-#include "CURLHTTP.h"
+#include "../../HTTP/HTTPClient/CURLHTTP.h"
 
 std::shared_ptr<PAL::IHTTPClient> PAL::HTTPClientFactory::makeHTTPClient() {
 	return std::make_shared<PAL::CURLHTTP>();

@@ -31,14 +31,13 @@ namespace PAL {
 			if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
 				m_status += "WSAStartup failed.\n";
 				m_status += std::system_category().message(WSAGetLastError());
-				system("pause");
 				return;
 			}
 
 			Socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 			host = gethostbyname(url.c_str());
 			if (host == nullptr) {
-				m_status += "Could not connect.\n";
+				m_status += "Could not connect to " + url + ".\n";
 				m_status += std::system_category().message(WSAGetLastError());
 				return;
 			}
@@ -47,9 +46,8 @@ namespace PAL {
 			SockAddr.sin_addr.s_addr = *((unsigned long*)host->h_addr);
 
 			if (connect(Socket, (SOCKADDR*)(&SockAddr), sizeof(SockAddr)) != 0) {
-				m_status += "Could not connect.\n";
+				m_status += "Could not connect to " + url + ".\n";
 				m_status += std::system_category().message(WSAGetLastError());
-				system("pause");
 				return;
 			}
 			send(Socket, get_http.c_str(), strlen(get_http.c_str()), 0);
@@ -69,6 +67,11 @@ namespace PAL {
 				response_header.erase(
 					response_header.find("\r\n\r\n"),
 					response_header.size());
+			}
+			if (WSAGetLastError()) {
+				m_status += "Could not connect to " + url + ".\n";
+				m_status += std::system_category().message(WSAGetLastError());
+				return;
 			}
 			closesocket(Socket);
 			WSACleanup();
