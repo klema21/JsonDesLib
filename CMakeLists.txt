@@ -6,7 +6,7 @@ if (WIN32)
 endif (WIN32)
 
 if (UNIX)
-	add_compile_options(-Wall -Wextra -pedantic) # -Werror
+	add_compile_options(-Wall -Wextra -pedantic -fsanitize=address) # -Werror
 	option(CURL "Use libcurl" ON)
 endif (UNIX)
 
@@ -28,7 +28,7 @@ if(WINHTTP)
 	target_link_libraries(JsonDesLib PUBLIC library PAL)
 endif(WINHTTP)
 if(CURL)
-	target_link_libraries(JsonDesLib PUBLIC library PAL curl)
+	target_link_libraries(JsonDesLib PUBLIC library PAL curl -fsanitize=address)
 endif(CURL)
 
 # specify the C++ standard
