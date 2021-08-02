@@ -24,6 +24,10 @@ namespace JSDL {
 		* @param values user`s object that would be filled with JSON string data
 		*/
 		void deserialize(const char* uri, ISerializable& d);
+
+		void asyncDes(const char* uri, ISerializable& d);
+
+		void asyncUserRst();
 	};
 }
 

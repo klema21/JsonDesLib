@@ -6,6 +6,7 @@
 #include "../../include/factories/HTTPClientFactory.h"
 #include "../../HTTP/HTTPClient/Request.h"
 #include "../../HTTP/HTTPClient/Response.h"
+#include "../../../library/Status.h"
 #include <algorithm>
 #include <future>
 

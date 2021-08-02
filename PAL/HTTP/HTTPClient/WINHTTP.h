@@ -18,20 +18,21 @@
 namespace PAL {
 	class WINHTTP : public IHTTPClient {
 	public:
-		std::string sendRequest(Request& rq, Response& rs) {
-			get_Website(rq.getUrl(), rq.getMethod());
+		JSDL::Status sendRequest(Request& rq, Response& rs) {
+			JSDL::Status m_status(rq.getUrl());
+			get_Website(rq.getUrl(), rq.getMethod(), m_status);
 			rs.setStatus(response_status);
 			rs.setHeader(response_header);
 			rs.setData(response_data);
 			return m_status;
 		}
 
-		void get_Website(const std::string& url, const std::string& method ) {
+		void get_Website(const std::string& url, const std::string& method, JSDL::Status& status) {
 			get_http = method + " / HTTP/1.1\r\nHost: " + url + "\r\nConnection: close\r\n\r\n";
 
 			if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
-				m_status += "WSAStartup failed.\n";
-				m_status += std::system_category().message(WSAGetLastError());
+				status.set("WSAStartup failed.\n");
+				status.set(std::system_category().message(WSAGetLastError()));
 				return;
 			}
 
@@ -39,8 +40,8 @@ namespace PAL {
 			host = gethostbyname(url.c_str());
 
 			if (host == nullptr) {
-				m_status += "Could not connect to " + url + ".\n";
-				m_status += std::system_category().message(WSAGetLastError());
+				status.set("Could not connect to " + url + ".\n");
+				status.set(std::system_category().message(WSAGetLastError()));
 				return;
 			}
 			SockAddr.sin_port = htons(80);
@@ -48,8 +49,8 @@ namespace PAL {
 			SockAddr.sin_addr.s_addr = *((unsigned long*)host->h_addr);
 
 			if (connect(Socket, (SOCKADDR*)(&SockAddr), sizeof(SockAddr)) != 0) {
-				m_status += "Could not connect to " + url + ".\n";
-				m_status += std::system_category().message(WSAGetLastError());
+				status.set("Could not connect to " + url + ".\n");
+				status.set(std::system_category().message(WSAGetLastError()));
 				return;
 			}
 			send(Socket, get_http.c_str(), strlen(get_http.c_str()), 0);
@@ -71,13 +72,13 @@ namespace PAL {
 					response_header.size());
 			}
 			if (WSAGetLastError()) {
-				m_status += "Could not connect to " + url + ".\n";
-				m_status += std::system_category().message(WSAGetLastError());
+				status.set("Could not connect to " + url + ".\n");
+				status.set(std::system_category().message(WSAGetLastError()));
 				return;
 			}
 			closesocket(Socket);
 			WSACleanup();
-			m_status += "Successful sending of data";
+			status.set("Successful sending of data");
 		}
 
 	private:

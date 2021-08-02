@@ -6,9 +6,9 @@
 #include "objects/Object3.h"
 #include "Engine.h"
 #include "Timer.h"
+#include <chrono>
 
-#include <fstream>
-
+using namespace std::chrono;
 class TestRunner {
 public:
 	void runVisualTests() const;
@@ -19,21 +19,40 @@ void TestRunner::runVisualTests() const {
 	// Test - 0 ----------------------------------------------------------------
 	// Big obj fills with big file
 	//const char* test0 = "ip.jsontest.com";
-	//const char* test0 = "date.jsontest.com";
-	const char* test0 = "linkedin.com";
+	const char* test0 = "date.jsontest.com";
+	//const char* test0 = "linkedin.com";
 	//const char* test0 = "vk.com";
 	//const char* test0 = "rkn.gov.ru";
 	//const char* test0 = "example.com";
 	//const char* test0 = "abc";
 
-	Timer t;
-	for (int i = 0; i < 10; ++i) {
-		std::cout << "test runner = " << i << std::endl;
+	Timer t1;
+	/*for (int i = 0; i < 1; ++i) {
 		Object3 ob0;
 		//e.onResult([&](Result res) {if (res) {} esle {}});
 		e.deserialize(test0, ob0);
-	}
-	t.stop("Test 1");
+	}*/
+	Object3 ob;
+	e.deserialize(test0, ob);
+	t1.stop("Test 1");
+
+	Timer t2;
+	
+	Object3 ob0;
+	e.asyncDes(test0, ob0);
+	Object3 ob1;
+	e.asyncDes(test0, ob1);
+	Object3 ob2;
+	e.asyncDes(test0, ob2);
+	Object3 ob3;
+	e.asyncDes(test0, ob3);
+	Object3 ob4;
+	e.asyncDes(test0, ob4);
+	Object3 ob5;
+	e.asyncDes(test0, ob5);
+	//e.asyncUserRst();
+	
+	t2.stop("Test 2");
 
 	// Test - 1 ----------------------------------------------------------------
 	// Big obj fills with big file

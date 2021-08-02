@@ -1,1 +1,1 @@
-add_library(library Engine.cc EngineImpl.cc)
+add_library(library Engine.cc EngineImpl.cc Status.cc)
