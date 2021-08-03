@@ -13,6 +13,8 @@
 // express or implied warranty.
 
 #include "ISerializable.h"
+#include "../library/Status.h"
+#include <functional>
 
 namespace JSDL {
 	class Engine {
@@ -25,7 +27,8 @@ namespace JSDL {
 		*/
 		void deserialize(const char* uri, ISerializable& d);
 
-		void asyncDes(const char* uri, ISerializable& d);
+		void asyncDes(const char* uri, ISerializable& d, 
+			std::function<void(JSDL::Status)> f);
 
 		void asyncUserRst();
 	};

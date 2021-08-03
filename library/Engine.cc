@@ -8,8 +8,10 @@ void JSDL::Engine::deserialize(const char* uri, ISerializable& d) {
 	holder.deserialize(uri, d);
 }
 
-void JSDL::Engine::asyncDes(const char* uri, ISerializable& d) {
-	holder.asyncUserDes(uri, d);
+void JSDL::Engine::asyncDes(const char* uri, ISerializable& d, 
+	std::function<void(JSDL::Status)> f) {
+
+	holder.asyncUserDes(uri, d, f);
 }
 
 void JSDL::Engine::asyncUserRst() {

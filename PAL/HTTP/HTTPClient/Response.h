@@ -24,10 +24,14 @@ namespace PAL {
 		std::string getStatus() const {
 			return m_status;
 		}
+		char getDData() const {
+			return *data;
+		}
 	private:
 		std::string m_header;
 		std::string m_data;
 		std::string m_status;
+		char* data{ nullptr };
 	};
 }
 

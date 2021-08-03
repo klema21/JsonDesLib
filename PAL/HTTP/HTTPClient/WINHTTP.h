@@ -33,6 +33,7 @@ namespace PAL {
 			if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
 				status.set("WSAStartup failed.\n");
 				status.set(std::system_category().message(WSAGetLastError()));
+				status.m_status = JSDL::Status::send_status::Fail;
 				return;
 			}
 
@@ -42,6 +43,7 @@ namespace PAL {
 			if (host == nullptr) {
 				status.set("Could not connect to " + url + ".\n");
 				status.set(std::system_category().message(WSAGetLastError()));
+				status.m_status = JSDL::Status::send_status::ConnectionError;
 				return;
 			}
 			SockAddr.sin_port = htons(80);
@@ -51,6 +53,7 @@ namespace PAL {
 			if (connect(Socket, (SOCKADDR*)(&SockAddr), sizeof(SockAddr)) != 0) {
 				status.set("Could not connect to " + url + ".\n");
 				status.set(std::system_category().message(WSAGetLastError()));
+				status.m_status = JSDL::Status::send_status::ConnectionError;
 				return;
 			}
 			send(Socket, get_http.c_str(), strlen(get_http.c_str()), 0);
@@ -74,11 +77,13 @@ namespace PAL {
 			if (WSAGetLastError()) {
 				status.set("Could not connect to " + url + ".\n");
 				status.set(std::system_category().message(WSAGetLastError()));
+				status.m_status = JSDL::Status::send_status::ConnectionError;
 				return;
 			}
 			closesocket(Socket);
 			WSACleanup();
 			status.set("Successful sending of data");
+			status.m_status = JSDL::Status::send_status::Success;
 		}
 
 	private:

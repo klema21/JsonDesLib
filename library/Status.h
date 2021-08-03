@@ -4,19 +4,23 @@
 #include <string>
 
 namespace JSDL{
-	class Status {
+	class Status{
 	public:
 		Status(const std::string& url);
 		void set(const std::string& msg);
 		std::string what() const;
-	private:
-		std::string m_msg{""};
-		std::string m_url{};
+
 		enum class send_status {
 			Success,
 			Fail,
-			InProgress
+			InProgress,
+			ConnectionError,
+			Timeout
 		} m_status;
+
+	private:
+		std::string m_msg{""};
+		std::string m_url{};
 	};
 }
 
