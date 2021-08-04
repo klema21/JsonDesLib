@@ -64,6 +64,7 @@ public:
 				std::cout << result.what() << std::endl;
 		});
 
+		e.asyncUserRst();
 		// Test - 1 ----------------------------------------------------------------
 		// Big obj fills with big file
 		/*std::string line, text;

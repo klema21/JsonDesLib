@@ -1,6 +1,7 @@
 #include "Parser.h"
 
 void PAL::Parser::parseStream(std::shared_ptr<PAL::IStream> is, JSDL::IEngine* e) {
+	std::lock_guard<std::mutex> lk(mtx);
 	Handler h = Handler(e);
 	rapidjson::Reader read;
 	auto jsonLen = is->available();
