@@ -31,12 +31,22 @@ void JSDL::EngineImpl::asyncUserDes(const char* uri, ISerializable& d,
 
 	/*asyncSuperData.push(std::async([=]() {
 		return PAL::StreamFactory::createStream(uri, f);
-		
 	}));
 	asyncDataSuper.push(d);*/
+	
+	/*d::promise<std::shared_ptr<PAL::IStream>> pr;
+	std::future<std::shared_ptr<PAL::IStream>> fr = pr.get_future();*/
 
-	auto s = std::async(PAL::StreamFactory::createStream, uri, f);
-
+	data.push(d);
+	auto p = PAL::ParserFactory::createParser();
+	//auto ss = std::async(PAL::StreamFactory::createStream, uri, f);
+	//fr = std::async(std::launch::async, PAL::StreamFactory::createStream, uri, f);
+	std::shared_ptr<PAL::IStream> s;
+	std::future<std::shared_ptr<PAL::IStream>> fr = std::async(std::launch::async, PAL::StreamFactory::createStream, uri, [&](JSDL::Status status) {
+		f(status);
+		//p->parseStream(s, this);
+	});
+	s = fr.get();
 }
 
 void JSDL::EngineImpl::asyncUserRst() {

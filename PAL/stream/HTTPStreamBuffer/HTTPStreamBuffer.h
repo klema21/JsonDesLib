@@ -15,8 +15,9 @@ typedef std::function<int(int)> callbackFunct;
 namespace PAL {
 	class HTTPStreamBuffer : public PAL::IStream {
 	public:
-		HTTPStreamBuffer(const char* src, 
+		HTTPStreamBuffer(const char* src,
 			std::function<void(JSDL::Status)> f);
+			//std::function<void(JSDL::Status)> f);
 		~HTTPStreamBuffer();
 
 		std::size_t read(uint8_t* dst, size_t size);

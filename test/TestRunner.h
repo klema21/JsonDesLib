@@ -35,31 +35,34 @@ public:
 		t1.stop("Test 1");*/
 
 		Object3 ob0;
-		const char* test0 = "date.jsontest.com";
+		const char* test0 = "linkedin.com";
 		
-		e.asyncDes(test0, ob0, [](JSDL::Status) {
-			std::cout << "bar bar bar" << std::endl;
+		e.asyncDes(test0, ob0, [](JSDL::Status result) {
+			if (result.m_status == JSDL::Status::send_status::Success)
+				std::cout << "test0" << std::endl;
+			if (result.m_status == JSDL::Status::send_status::ConnectionError)
+				std::cout << result.what() << std::endl;
 		});
-		/*e.asyncDes(test0, ob0, [&ob0](JSDL::Status status) {
-			if(status==OK)
-		});
-		e.asyncDes(test0, ob0);
+
 		Object3 ob1;
-		const char* test1 = "date.jsontest.com";
-		e.asyncDes(test1, ob1);
+		const char* test1 = "linkedin.com";
+
+		e.asyncDes(test1, ob1, [](JSDL::Status result) {
+			if (result.m_status == JSDL::Status::send_status::Success)
+				std::cout << "test1" << std::endl;
+			if (result.m_status == JSDL::Status::send_status::ConnectionError)
+				std::cout << result.what() << std::endl;
+		});
+
 		Object3 ob2;
-		const char* test2 = "date.jsontest.com";
-		e.asyncDes(test2, ob2);
-		Object3 ob3;
-		const char* test3 = "date.jsontest.com";
-		e.asyncDes(test3, ob3);
-		Object3 ob4;
-		const char* test4 = "date.jsontest.com";
-		e.asyncDes(test4, ob4);
-		Object3 ob5;
-		const char* test5 = "date.jsontest.com";
-		e.asyncDes(test5, ob5);*/
-		e.asyncUserRst();
+		const char* test2 = "linkedin.com";
+
+		e.asyncDes(test2, ob2, [](JSDL::Status result) {
+			if (result.m_status == JSDL::Status::send_status::Success)
+				std::cout << "test2" << std::endl;
+			if (result.m_status == JSDL::Status::send_status::ConnectionError)
+				std::cout << result.what() << std::endl;
+		});
 
 		// Test - 1 ----------------------------------------------------------------
 		// Big obj fills with big file

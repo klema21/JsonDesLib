@@ -1,22 +1,22 @@
 #include "HTTPStreamBuffer.h"
 
 PAL::HTTPStreamBuffer::HTTPStreamBuffer(const char* src,
-						std::function<void(JSDL::Status)> f) {
+			std::function<void(JSDL::Status)> f){
+						//std::function<void(JSDL::Status)> f) {
+
 	m_rqst.setUrl(src);
 	auto client = HTTPClientFactory::createHTTPClient();
 	JSDL::Status status = client->sendRequest(m_rqst, m_rsp);
 
 	if (status.m_status == JSDL::Status::send_status::Success) {
-		puts(status.what().c_str());
-		puts(m_rsp.getStatus().c_str());
+		//puts(status.what().c_str());
+		//puts(m_rsp.getStatus().c_str());
 		m_size = m_rsp.getData().size();
 		m_buff = new char[m_size];
 		std::string tmp = m_rsp.getData();
 		std::copy(tmp.begin(), tmp.end(), m_buff);
 	}
-	else if(status.m_status == JSDL::Status::send_status::ConnectionError) {
-		std::cout << status.what() << std::endl;
-	}
+	f(status);
 }
 
 PAL::HTTPStreamBuffer::~HTTPStreamBuffer() {
