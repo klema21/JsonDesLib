@@ -15,12 +15,12 @@ size_t writeFunction(void *ptr,
 namespace PAL {
 	class CURLHTTP : public IHTTPClient {
 	public:
-		std::string sendRequest(Request& rq, Response& rs) {
-			std::string foo = rq.getUrl();
+		JSDL::Status sendRequest(Request& rq, Response& rs) {
+			JSDL::Status foo(rq.getUrl());
 
 			auto curl = curl_easy_init();
 			if (curl) {
-				curl_easy_setopt(curl, CURLOPT_URL, foo.c_str());
+				curl_easy_setopt(curl, CURLOPT_URL, rq.getUrl().c_str());
 				curl_easy_setopt(curl, CURLOPT_ERRORBUFFER, errbuf);
 				errbuf[0] = 0;
 				std::string response_status;
@@ -43,7 +43,9 @@ namespace PAL {
 				curl = nullptr;
 
 				if(res != CURLE_OK){
-					m_status = errbuf;
+					//m_status = errbuf;
+					foo.set(errbuf);
+					foo.m_status = JSDL::Status::send_status::ConnectionError;
 				}
 
 				response_status.assign(
@@ -52,11 +54,12 @@ namespace PAL {
 				rs.setStatus(response_status);
 				rs.setHeader(response_header);
 				rs.setData(response_data);
+				foo.m_status = JSDL::Status::send_status::Success;
+				foo.set("Successful sending of data");
 			}
-			return m_status;
+			return foo;
 		}
 	private:
-		std::string m_status { "Successful sending of data" };
 		CURLcode res;
 		char errbuf[CURL_ERROR_SIZE];
 	};
