@@ -14,47 +14,25 @@ JSDL::EngineImpl::~EngineImpl() {
 }
 
 void JSDL::EngineImpl::deserialize(const char* uri, ISerializable& d) {
-	std::cout << "No longer available, use async slow man" << std::endl;
-	/*data.push(d);
+	data.push(d);
 	auto p = PAL::ParserFactory::createParser();
-	auto s = PAL::StreamFactory::createStream(uri);
-	p->parseStream(s, this);*/
+	auto s = PAL::StreamFactory::createStream(uri, [](JSDL::Status result){
+			if (result.m_status == JSDL::Status::send_status::Success)
+				std::cout << "test1" << std::endl;
+			if (result.m_status == JSDL::Status::send_status::ConnectionError)
+				std::cout << result.what() << std::endl;
+			});
+	p->parseStream(s, this);
 }
 
 void JSDL::EngineImpl::asyncUserDes(const char* uri, ISerializable& d,
 	std::function<void(JSDL::Status)> f) {
-	/*if (i < 5) {
-		asyncDes.push_back(std::async([&]() {
-			return PAL::StreamFactory::createStream(uri);
-		}));
-		asyncData.push_back(d);
-		++i;
-	} else {
-		for(int i = 0; i < 5; ++i) {
-			data.push(asyncData[i]);
-			auto p = PAL::ParserFactory::createParser();
-			auto s = asyncDes[i].get();
-			p->parseStream(s, this);
-		}
-	}*/
+	
 	asyncSuperData.push(std::async([=]() {
 		return PAL::StreamFactory::createStream(uri, f);
 	}));
 	asyncDataSuper.push(d);
 	//asyncUserRst();
-	/*d::promise<std::shared_ptr<PAL::IStream>> pr;
-	std::future<std::shared_ptr<PAL::IStream>> fr = pr.get_future();*/
-
-	/*data.push(d);
-	auto p = PAL::ParserFactory::createParser();
-	//auto ss = std::async(PAL::StreamFactory::createStream, uri, f);
-	//fr = std::async(std::launch::async, PAL::StreamFactory::createStream, uri, f);
-	std::shared_ptr<PAL::IStream> s;
-	std::future<std::shared_ptr<PAL::IStream>> fr = std::async(std::launch::async, PAL::StreamFactory::createStream, uri, [&](JSDL::Status status) {
-		f(status);
-		//p->parseStream(s, this);
-	});*/
-	//s = fr.get();
 }
 
 void JSDL::EngineImpl::asyncUserRst() {

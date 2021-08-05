@@ -26,13 +26,11 @@ public:
 		//const char* test0 = "example.com";
 		//const char* test0 = "abc";
 
-	/*	Timer t1;
-		for (int i = 0; i < 10; ++i) {
+		/*for (int i = 0; i < 10; ++i) {
 			Object3 ob0;
 			//e.onResult([&](Result res) {if (res) {} esle {}});
 			e.deserialize(test0, ob0);
-		}
-		t1.stop("Test 1");*/
+		}*/
 
 		Object3 ob0;
 		const char* test0 = "linkedin.com";
@@ -58,6 +56,76 @@ public:
 		const char* test2 = "linkedin.com";
 
 		e.asyncDes(test2, ob2, [](JSDL::Status result) {
+			if (result.m_status == JSDL::Status::send_status::Success)
+				std::cout << "test2" << std::endl;
+			if (result.m_status == JSDL::Status::send_status::ConnectionError)
+				std::cout << result.what() << std::endl;
+		});
+
+		Object3 ob3;
+		const char* test3 = "linkedin.com";
+
+		e.asyncDes(test3, ob3, [](JSDL::Status result) {
+			if (result.m_status == JSDL::Status::send_status::Success)
+				std::cout << "test2" << std::endl;
+			if (result.m_status == JSDL::Status::send_status::ConnectionError)
+				std::cout << result.what() << std::endl;
+		});
+
+		Object3 ob4;
+		const char* test4 = "linkedin.com";
+
+		e.asyncDes(test4, ob4, [](JSDL::Status result) {
+			if (result.m_status == JSDL::Status::send_status::Success)
+				std::cout << "test2" << std::endl;
+			if (result.m_status == JSDL::Status::send_status::ConnectionError)
+				std::cout << result.what() << std::endl;
+		});
+
+		Object3 ob5;
+		const char* test5 = "linkedin.com";
+
+		e.asyncDes(test5, ob5, [](JSDL::Status result) {
+			if (result.m_status == JSDL::Status::send_status::Success)
+				std::cout << "test2" << std::endl;
+			if (result.m_status == JSDL::Status::send_status::ConnectionError)
+				std::cout << result.what() << std::endl;
+		});
+
+		Object3 ob6;
+		const char* test6 = "linkedin.com";
+
+		e.asyncDes(test6, ob6, [](JSDL::Status result) {
+			if (result.m_status == JSDL::Status::send_status::Success)
+				std::cout << "test2" << std::endl;
+			if (result.m_status == JSDL::Status::send_status::ConnectionError)
+				std::cout << result.what() << std::endl;
+		});
+
+		Object3 ob7;
+		const char* test7 = "linkedin.com";
+
+		e.asyncDes(test7, ob7, [](JSDL::Status result) {
+			if (result.m_status == JSDL::Status::send_status::Success)
+				std::cout << "test2" << std::endl;
+			if (result.m_status == JSDL::Status::send_status::ConnectionError)
+				std::cout << result.what() << std::endl;
+		});
+
+		Object3 ob8;
+		const char* test8 = "linkedin.com";
+
+		e.asyncDes(test8, ob8, [](JSDL::Status result) {
+			if (result.m_status == JSDL::Status::send_status::Success)
+				std::cout << "test2" << std::endl;
+			if (result.m_status == JSDL::Status::send_status::ConnectionError)
+				std::cout << result.what() << std::endl;
+		});
+
+		Object3 ob9;
+		const char* test9 = "linkedin.com";
+
+		e.asyncDes(test9, ob9, [](JSDL::Status result) {
 			if (result.m_status == JSDL::Status::send_status::Success)
 				std::cout << "test2" << std::endl;
 			if (result.m_status == JSDL::Status::send_status::ConnectionError)
