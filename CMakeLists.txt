@@ -1,8 +1,8 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.14)
 
 if (WIN32)
 	add_compile_options(/W3)
-    	option(WINHTTP "Use WIN32 sockets" ON)
+    option(WINHTTP "Use WIN32 sockets" ON)
 endif (WIN32)
 
 if (UNIX)
@@ -25,7 +25,15 @@ add_subdirectory(PAL)
 
 add_executable(JsonDesLib main.cc)
 
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/archive/609281088cfefc76f9d0ce82e1ff6c30cc3591e5.zip
+)
+
 if(WINHTTP)
+	set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+	FetchContent_MakeAvailable(googletest)
 	target_link_libraries(JsonDesLib PUBLIC library PAL)
 endif(WINHTTP)
 if(CURL)
@@ -35,3 +43,19 @@ endif(CURL)
 # specify the C++ standard
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+enable_testing()
+
+add_executable(
+  hello_test
+  test/hello_test.cc
+)
+target_link_libraries(
+  hello_test
+  gtest_main
+  library
+  PAL
+)
+
+include(GoogleTest)
+gtest_discover_tests(hello_test)

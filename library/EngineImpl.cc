@@ -32,7 +32,6 @@ void JSDL::EngineImpl::asyncUserDes(const char* uri, ISerializable& d,
 		return PAL::StreamFactory::createStream(uri, f);
 	}));
 	asyncDataSuper.push(d);
-	//asyncUserRst();
 }
 
 void JSDL::EngineImpl::asyncUserRst() {

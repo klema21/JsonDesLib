@@ -21,6 +21,7 @@ namespace PAL {
 		JSDL::Status sendRequest(Request& rq, Response& rs) {
 			JSDL::Status m_status(rq.getUrl());
 			get_Website(rq.getUrl(), rq.getMethod(), m_status);
+			m_status.setHTTPStatus(response_status);
 			rs.setStatus(response_status);
 			rs.setHeader(response_header);
 			rs.setData(response_data);
@@ -31,8 +32,8 @@ namespace PAL {
 			get_http = method + " / HTTP/1.1\r\nHost: " + url + "\r\nConnection: close\r\n\r\n";
 
 			if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
-				status.set("WSAStartup failed.\n");
-				status.set(std::system_category().message(WSAGetLastError()));
+				status.setSendStatus("WSAStartup failed.\n");
+				status.setSendStatus(std::system_category().message(WSAGetLastError()));
 				status.m_status = JSDL::Status::send_status::Fail;
 				return;
 			}
@@ -41,8 +42,8 @@ namespace PAL {
 			host = gethostbyname(url.c_str());
 
 			if (host == nullptr) {
-				status.set("Could not connect to " + url + ".\n");
-				status.set(std::system_category().message(WSAGetLastError()));
+				status.setSendStatus("Could not connect to " + url + ".\n");
+				status.setSendStatus(std::system_category().message(WSAGetLastError()));
 				status.m_status = JSDL::Status::send_status::ConnectionError;
 				return;
 			}
@@ -51,8 +52,8 @@ namespace PAL {
 			SockAddr.sin_addr.s_addr = *((unsigned long*)host->h_addr);
 
 			if (connect(Socket, (SOCKADDR*)(&SockAddr), sizeof(SockAddr)) != 0) {
-				status.set("Could not connect to " + url + ".\n");
-				status.set(std::system_category().message(WSAGetLastError()));
+				status.setSendStatus("Could not connect to " + url + ".\n");
+				status.setSendStatus(std::system_category().message(WSAGetLastError()));
 				status.m_status = JSDL::Status::send_status::ConnectionError;
 				return;
 			}
@@ -75,14 +76,14 @@ namespace PAL {
 					response_header.size());
 			}
 			if (WSAGetLastError()) {
-				status.set("Could not connect to " + url + ".\n");
-				status.set(std::system_category().message(WSAGetLastError()));
+				status.setSendStatus("Could not connect to " + url + ".\n");
+				status.setSendStatus(std::system_category().message(WSAGetLastError()));
 				status.m_status = JSDL::Status::send_status::ConnectionError;
 				return;
 			}
 			closesocket(Socket);
 			WSACleanup();
-			status.set("Successful sending of data");
+			status.setSendStatus("Successful sending of data");
 			status.m_status = JSDL::Status::send_status::Success;
 		}
 
