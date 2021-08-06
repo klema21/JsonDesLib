@@ -10,14 +10,12 @@
 #include <algorithm>
 #include <future>
 
-typedef std::function<int(int)> callbackFunct;
+typedef std::function<void(JSDL::Status)> callbackFunct;
 
 namespace PAL {
 	class HTTPStreamBuffer : public PAL::IStream {
 	public:
-		HTTPStreamBuffer(const char* src,
-			std::function<void(JSDL::Status)> f);
-			//std::function<void(JSDL::Status)> f);
+		HTTPStreamBuffer(const char* src, callbackFunct callback);
 		~HTTPStreamBuffer();
 
 		std::size_t read(uint8_t* dst, size_t size);
@@ -32,9 +30,6 @@ namespace PAL {
 		char* rsp_buff{ nullptr };
 		Request m_rqst;
 		Response m_rsp;
-		int attempts = 0;
-		callbackFunct f;
-		std::future<std::string> ar;
 	};
 }
 

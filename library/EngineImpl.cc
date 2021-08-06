@@ -1,18 +1,5 @@
 #include "EngineImpl.h"
 
-JSDL::EngineImpl::EngineImpl() {
-	/*wildloop = std::async(std::launch::async, [=]() {
-		return wild();
-	});*/
-	//auto wildl = std::async(wild, true);
-}
-
-JSDL::EngineImpl::~EngineImpl() {
-	//wildend = wildloop.get();
-	//++i;
-	//std::cout << "dtor" << std::endl;
-}
-
 void JSDL::EngineImpl::deserialize(const char* uri, ISerializable& d) {
 	data.push(d);
 	auto s = PAL::StreamFactory::createStream(uri, [](JSDL::Status result){
@@ -27,11 +14,11 @@ void JSDL::EngineImpl::deserialize(const char* uri, ISerializable& d) {
 	}
 }
 
-void JSDL::EngineImpl::asyncUserDes(const char* uri, ISerializable& d,
-	std::function<void(JSDL::Status)> f) {
+void JSDL::EngineImpl::asyncUserDes(
+	const char* uri, ISerializable& d, callbackFunct callback) {
 	
 	asyncSuperData.push(std::async([=]() {
-		return PAL::StreamFactory::createStream(uri, f);
+		return PAL::StreamFactory::createStream(uri, callback);
 	}));
 	asyncDataSuper.push(d);
 }
@@ -46,21 +33,6 @@ void JSDL::EngineImpl::asyncUserRst() {
 		}
 		asyncDataSuper.pop();
 		asyncSuperData.pop();
-	}
-}
-
-int JSDL::EngineImpl::wild() {
-	while (1) {
-		//std::lock_guard<std::mutex> grd(mtx);
-		asyncUserRst();
-		/*while (!asyncSuperData.empty()) {
-			std::cout << "Here i am" << std::endl;
-			data.push(asyncDataSuper.front());
-			auto s = asyncSuperData.front().get();
-			//p->parseStream(s, this);
-			asyncDataSuper.pop();
-			asyncSuperData.pop();
-		}*/
 	}
 }
 

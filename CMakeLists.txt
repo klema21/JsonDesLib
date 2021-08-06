@@ -37,7 +37,7 @@ if(WINHTTP)
 	target_link_libraries(JsonDesLib PUBLIC library PAL)
 endif(WINHTTP)
 if(CURL)
-	target_link_libraries(JsonDesLib PUBLIC library PAL curl -fsanitize=address) #thread
+	target_link_libraries(JsonDesLib PUBLIC library PAL curl -fsanitize=address)
 endif(CURL)
 
 # specify the C++ standard

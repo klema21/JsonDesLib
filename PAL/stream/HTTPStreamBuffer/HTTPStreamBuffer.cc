@@ -1,7 +1,6 @@
 #include "HTTPStreamBuffer.h"
 
-PAL::HTTPStreamBuffer::HTTPStreamBuffer(const char* src,
-			std::function<void(JSDL::Status)> f){
+PAL::HTTPStreamBuffer::HTTPStreamBuffer(const char* src, callbackFunct callback){
 
 	m_rqst.setUrl(src);
 	auto client = HTTPClientFactory::createHTTPClient();
@@ -14,7 +13,7 @@ PAL::HTTPStreamBuffer::HTTPStreamBuffer(const char* src,
 		std::string tmp = m_rsp.getData();
 		std::copy(tmp.begin(), tmp.end(), m_buff);
 	}
-	f(status);
+	callback(status);
 }
 
 PAL::HTTPStreamBuffer::~HTTPStreamBuffer() {
@@ -25,7 +24,6 @@ std::size_t PAL::HTTPStreamBuffer::read(uint8_t* dst, size_t size) {
 	if (m_curr < m_size) {
 		auto length = (m_curr + size) < m_size ? m_curr + size : m_size;
 		std::copy(m_buff + m_curr, m_buff + length, dst + m_curr);
-		//dst = reinterpret_cast<uint8_t*>(const_cast<char*>(m_rsp.getData().c_str()));
 		m_curr = length;
 		return length;
 	}

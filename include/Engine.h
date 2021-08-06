@@ -16,6 +16,8 @@
 #include "../library/Status.h"
 #include <functional>
 
+typedef std::function<void(JSDL::Status)> callbackFunct;
+
 namespace JSDL {
 	class Engine {
 	public:
@@ -27,8 +29,7 @@ namespace JSDL {
 		*/
 		void deserialize(const char* uri, ISerializable& d);
 
-		void asyncDes(const char* uri, ISerializable& d, 
-			std::function<void(JSDL::Status)> f);
+		void asyncDes(const char* uri, ISerializable& d, callbackFunct callback);
 
 		void asyncUserRst();
 	};

@@ -26,7 +26,7 @@ namespace JSDL{
 		} m_http_status;
 
 	private:
-		std::string m_msg{""};
+		std::string m_msg{};
 		std::string m_url{};
 		std::string m_http_response_status{};
 	};
