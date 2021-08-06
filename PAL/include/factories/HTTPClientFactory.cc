@@ -5,4 +5,6 @@ std::shared_ptr<PAL::IHTTPClient> PAL::HTTPClientFactory::makeHTTPClient() {
 	return std::make_shared<PAL::CURLHTTP>();
 }
 
-std::function<std::shared_ptr<PAL::IHTTPClient>()> PAL::HTTPClientFactory::createHTTPClient = PAL::HTTPClientFactory::makeHTTPClient;
+using namespace PAL;
+using namespace std;
+function<shared_ptr<IHTTPClient>()> HTTPClientFactory::createHTTPClient = HTTPClientFactory::makeHTTPClient;

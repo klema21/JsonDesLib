@@ -16,7 +16,7 @@ namespace PAL {
 	class CURLHTTP : public IHTTPClient {
 	public:
 		JSDL::Status sendRequest(Request& rq, Response& rs) {
-			JSDL::Status foo(rq.getUrl());
+			JSDL::Status status(rq.getUrl());
 
 			auto curl = curl_easy_init();
 			if (curl) {
@@ -48,18 +48,18 @@ namespace PAL {
 				rs.setStatus(response_status);
 				rs.setHeader(response_header);
 				rs.setData(response_data);
-				foo.setHTTPStatus(response_status);
+				status.setHTTPStatus(response_status);
 
 				if(res != CURLE_OK){
-					foo.setSendStatus(errbuf);
-					foo.m_status = JSDL::Status::send_status::ConnectionError;
+					status.setSendStatus(errbuf);
+					status.m_status = JSDL::Status::send_status::ConnectionError;
 				}else{
-					foo.m_status = JSDL::Status::send_status::Success;
-					foo.setSendStatus("Successful sending of data");				
+					status.m_status = JSDL::Status::send_status::Success;
+					status.setSendStatus("Successful sending of data");				
 				}
 
 			}
-			return foo;
+			return status;
 		}
 	private:
 		CURLcode res;

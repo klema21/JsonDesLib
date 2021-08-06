@@ -29,9 +29,9 @@ namespace JSDL {
 		*/
 		void deserialize(const char* uri, ISerializable& d);
 
-		void asyncDes(const char* uri, ISerializable& d, callbackFunct callback);
+		void asyncDeserialize(const char* uri, ISerializable& d, callbackFunct callback);
 
-		void asyncUserRst();
+		void asyncDeserializeRun();
 	};
 }
 

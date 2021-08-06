@@ -1,7 +1,7 @@
 #include "EngineImpl.h"
 
-void JSDL::EngineImpl::deserialize(const char* uri, ISerializable& d) {
-	data.push(d);
+void JSDL::EngineImpl::deserialize(const char* uri, ISerializable& object) {
+	data.push(object);
 	auto s = PAL::StreamFactory::createStream(uri, [](JSDL::Status result){
 			if (result.m_status == JSDL::Status::send_status::ConnectionError)
 				std::cout << result.what() << std::endl;
@@ -14,25 +14,25 @@ void JSDL::EngineImpl::deserialize(const char* uri, ISerializable& d) {
 	}
 }
 
-void JSDL::EngineImpl::asyncUserDes(
-	const char* uri, ISerializable& d, callbackFunct callback) {
+void JSDL::EngineImpl::asyncDeserialize(
+	const char* uri, ISerializable& object, callbackFunct callback) {
 	
-	asyncSuperData.push(std::async([=]() {
+	asyncQueueData.push(std::async([=]() {
 		return PAL::StreamFactory::createStream(uri, callback);
 	}));
-	asyncDataSuper.push(d);
+	asyncQueueObjects.push(object);
 }
 
-void JSDL::EngineImpl::asyncUserRst() {
-	while (!asyncSuperData.empty()) {
-		data.push(asyncDataSuper.front());
-		auto s = asyncSuperData.front().get();
+void JSDL::EngineImpl::asyncDeserializeRun() {
+	while (!asyncQueueData.empty()) {
+		data.push(asyncQueueObjects.front());
+		auto s = asyncQueueData.front().get();
 		if (s->available() != 0) {
 			auto p = PAL::ParserFactory::createParser();
 			p->parseStream(s, this);
 		}
-		asyncDataSuper.pop();
-		asyncSuperData.pop();
+		asyncQueueData.pop();
+		asyncQueueObjects.pop();
 	}
 }
 

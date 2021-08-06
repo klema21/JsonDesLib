@@ -7,8 +7,6 @@
 #include "../../../3rdparty/rapidjson/writer.h"
 #include "../../../3rdparty/rapidjson/document.h"
 
-#include <mutex>
-
 namespace PAL {
 	class Parser : public PAL::IParser {
 		struct Handler
@@ -133,7 +131,6 @@ namespace PAL {
 		};
 	public:
 		void parseStream(std::shared_ptr<PAL::IStream> is, JSDL::IEngine* e);
-		std::mutex mtx;
 	};
 }
 #endif
