@@ -21,7 +21,6 @@ namespace PAL {
 		JSDL::Status sendRequest(Request& rq, Response& rs) {
 			JSDL::Status m_status(rq.getUrl());
 			get_Website(rq.getUrl(), rq.getMethod(), m_status);
-			m_status.setHTTPStatus(response_status);
 			rs.setStatus(response_status);
 			rs.setHeader(response_header);
 			rs.setData(response_data);
@@ -83,7 +82,8 @@ namespace PAL {
 			}
 			closesocket(Socket);
 			WSACleanup();
-			status.setSendStatus("Successful sending of data");
+			status.setSendStatus("Successful sending of data.\n");
+			status.setHTTPStatus(response_status);
 			status.m_status = JSDL::Status::send_status::Success;
 		}
 

@@ -9,28 +9,26 @@ namespace JSDL{
 		Status(const std::string& url);
 		void setSendStatus(const std::string& msg);
 		void setHTTPStatus(const std::string& status);
-		std::size_t bodySize() const;
 		std::string what() const;
+		std::string statusCode() const;
 
 		enum class send_status {
 			Success,
 			Fail,
 			InProgress,
-			ConnectionError,
-			Timeout
+			ConnectionError
 		} m_status;
 
 		enum class http_status {
 			NO_STATUS,
 			OK,
-			FAIL
+			ERROR
 		} m_http_status;
 
 	private:
 		std::string m_msg{""};
 		std::string m_url{};
 		std::string m_http_response_status{};
-		std::size_t m_body_size = 0;
 	};
 }
 

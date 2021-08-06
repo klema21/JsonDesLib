@@ -14,7 +14,7 @@ using namespace std::chrono;
 class TestRunner {
 public:
 	std::string runGTest() const {
-		return "08-05-2021";
+		return "08-06-2021";
 	}
 
 	void runVisualTests() const {
@@ -33,7 +33,6 @@ public:
 			Object3 ob0;
 			//e.onResult([&](Result res) {if (res) {} esle {}});
 			e.deserialize(test10, ob0);
-			std::cout << ob0.get() << std::endl;
 		}
 
 		Object3 ob0;

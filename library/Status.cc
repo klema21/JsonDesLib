@@ -9,14 +9,21 @@ void JSDL::Status::setSendStatus(const std::string& msg) {
 	m_msg += msg;
 }
 
+#include <iostream>
 void JSDL::Status::setHTTPStatus(const std::string& status) {
 	m_http_response_status = status;
-}
-
-std::size_t JSDL::Status::bodySize() const {
-	return m_body_size;
+	if (m_http_response_status == "HTTP/1.1 200 OK\r") {
+		m_http_status = http_status::OK;
+	}
+	else {
+		m_http_status = http_status::ERROR;
+	}
 }
 
 std::string JSDL::Status::what() const {
 	return m_msg;
+}
+
+std::string JSDL::Status::statusCode() const {
+	return m_http_response_status;
 }
