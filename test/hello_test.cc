@@ -4,6 +4,7 @@
 #include <string>
 #include "TestRunner.h"
 
+
 TEST(SyncTest, GoodRequest__SuitableObject__10) {
 	JSDL::Engine e;
 	const char* test0 = "date.jsontest.com";

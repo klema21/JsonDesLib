@@ -40,13 +40,7 @@ namespace PAL {
 				//curl_easy_perform(curl);
 				res = curl_easy_perform(curl);
 				curl_easy_cleanup(curl);
-				curl = nullptr;
-
-				if(res != CURLE_OK){
-					//m_status = errbuf;
-					foo.set(errbuf);
-					foo.m_status = JSDL::Status::send_status::ConnectionError;
-				}
+				curl = nullptr;	
 
 				response_status.assign(
 					response_header, 0, response_header.find('\n'));
@@ -54,8 +48,16 @@ namespace PAL {
 				rs.setStatus(response_status);
 				rs.setHeader(response_header);
 				rs.setData(response_data);
-				foo.m_status = JSDL::Status::send_status::Success;
-				foo.set("Successful sending of data");
+				foo.setHTTPStatus(response_status);
+
+				if(res != CURLE_OK){
+					foo.setSendStatus(errbuf);
+					foo.m_status = JSDL::Status::send_status::ConnectionError;
+				}else{
+					foo.m_status = JSDL::Status::send_status::Success;
+					foo.setSendStatus("Successful sending of data");				
+				}
+
 			}
 			return foo;
 		}

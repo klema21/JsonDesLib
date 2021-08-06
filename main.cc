@@ -4,7 +4,7 @@
 int main() {
 	JSDL::Engine e;
 	Object3 ob;
-	const char* test = "date.jsontest.com";
+	const char* test = "datejsontecom";
 	e.asyncDes(test, ob, [](JSDL::Status result) {
 		if (result.m_status == JSDL::Status::send_status::ConnectionError)
 			std::cout << result.what() << std::endl;

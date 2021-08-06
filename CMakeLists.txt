@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 
+
 if (WIN32)
 	add_compile_options(/W3)
     option(WINHTTP "Use WIN32 sockets" ON)
@@ -7,7 +8,9 @@ endif (WIN32)
 
 if (UNIX)
 	#	-Werror -fsanitize=thread
-	add_compile_options(-Wall -Wextra -pedantic -pthread -fsanitize=address -O3)
+	#add_compile_options(-Wall -Wextra -pedantic -pthread -fsanitize=address -O2)
+	add_compile_options(-Wall -Wextra -pedantic -pthread -pthread -O2)
+	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 	option(CURL "Use libcurl" ON)
 endif (UNIX)
 
@@ -50,12 +53,30 @@ add_executable(
   hello_test
   test/hello_test.cc
 )
-target_link_libraries(
-  hello_test
-  gtest_main
-  library
-  PAL
-)
+
+if(WINHTTP)
+	target_link_libraries(
+	  hello_test
+	  gtest_main
+	  library
+	  PAL
+	)
+endif(WINHTTP)
+
+if(CURL)
+
+	find_package(GTest REQUIRED)
+	include_directories(${GTEST_INCLUDE_DIRS}) 
+
+    target_link_libraries(
+	hello_test
+	gtest_main
+	${GTEST_LIBRARIES} pthread
+	library
+	PAL
+	curl
+    )
+endif(CURL)
 
 include(GoogleTest)
 gtest_discover_tests(hello_test)
