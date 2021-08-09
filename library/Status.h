@@ -2,13 +2,16 @@
 #define STATUS_H
 
 #include <string>
+#include "../include/IStatus.h"
 
 namespace JSDL{
-	class Status{
+	class Status : public IStatus {
 	public:
+		Status();
 		Status(const std::string& url);
 		void setSendStatus(const std::string& msg);
 		void setHTTPStatus(const std::string& status);
+		void setObjectStatus();
 		std::string what() const;
 		std::string statusCode() const;
 
@@ -24,6 +27,11 @@ namespace JSDL{
 			OK,
 			ERROR
 		} m_http_status;
+
+		enum class object_status {
+			Empty,
+			Complete
+		} m_object_status;
 
 	private:
 		std::string m_msg{};

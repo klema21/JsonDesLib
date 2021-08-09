@@ -1,26 +1,25 @@
 #include "EngineImpl.h"
 
-void JSDL::EngineImpl::deserialize(const char* uri, ISerializable& object) {
+JSDL::Status JSDL::EngineImpl::deserialize(const char* uri, ISerializable& object) {
 	data.push(object);
-	auto s = PAL::StreamFactory::createStream(uri, [](JSDL::Status result){
-			if (result.m_status == JSDL::Status::send_status::ConnectionError)
-				std::cout << result.what() << std::endl;
-			if (result.m_http_status == JSDL::Status::http_status::ERROR)
-				std::cout << result.statusCode() << std::endl;
-			});
-	if (s->available() != 0) {
-		auto p = PAL::ParserFactory::createParser();
-		p->parseStream(s, this);
-	}
+	auto s = PAL::StreamFactory::createStream(uri);
+	auto p = PAL::ParserFactory::createParser();
+	JSDL::Status st;
+	std::weak_ptr<PAL::IStream> gw = s;
+	//std::weak_ptr<s.get()> sl;
+	s->request([&](std::size_t size) {
+		st = p->parseStream(s, this);
+	}, gw);
+	return st;
 }
 
 void JSDL::EngineImpl::asyncDeserialize(
 	const char* uri, ISerializable& object, callbackFunct callback) {
 	
-	asyncQueueData.push(std::async([=]() {
+	/*asyncQueueData.push(std::async([=]() {
 		return PAL::StreamFactory::createStream(uri, callback);
 	}));
-	asyncQueueObjects.push(object);
+	asyncQueueObjects.push(object);*/
 }
 
 void JSDL::EngineImpl::asyncDeserializeRun() {

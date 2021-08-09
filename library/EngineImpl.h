@@ -5,6 +5,7 @@
 #include "../include/ISerializable.h"
 #include "../PAL/include/factories/ParserFactory.h"
 #include "../PAL/include/factories/StreamFactory.h"
+#include "../library/Status.h"
 #include <stack>
 #include <future>
 #include <queue>
@@ -12,8 +13,9 @@
 namespace JSDL {
 	class EngineImpl : public IEngine {
 	public:
-		void deserialize	 (const char* uri, ISerializable& object);
-		void asyncDeserialize(const char* uri, ISerializable& object, callbackFunct callback);
+		//void deserialize		 (const char* uri, ISerializable& object);
+		JSDL::Status deserialize (const char* uri, ISerializable& object);
+		void asyncDeserialize	 (const char* uri, ISerializable& object, callbackFunct callback);
 		void asyncDeserializeRun();
 		void newValue( const std::string& name, std::string value);
 		void newValue( const std::string& name, bool		value);

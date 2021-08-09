@@ -27,7 +27,8 @@ namespace PAL {
 		* @param values stream data that containing characters of string type.
 		* @param values engine interface to publish events from handler to engine.
 		*/
-		virtual void parseStream(std::shared_ptr<PAL::IStream> is, JSDL::IEngine* e) = 0;
+		//virtual void parseStream(std::shared_ptr<PAL::IStream> is, JSDL::IEngine* e) = 0;
+		virtual JSDL::Status parseStream(std::shared_ptr<PAL::IStream> is, JSDL::IEngine *e) = 0;
 		/**
 		* Deleting a derived class object using a pointer to a base class.
 		*/

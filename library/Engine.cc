@@ -3,8 +3,12 @@
 
 JSDL::EngineImpl holder;
 
-void JSDL::Engine::deserialize(const char* uri, ISerializable& d) {
+/*void JSDL::Engine::deserialize(const char* uri, ISerializable& d) {
 	holder.deserialize(uri, d);
+}*/
+
+JSDL::Status JSDL::Engine::deserialize(const char* uri, ISerializable& d) {
+	return holder.deserialize(uri, d);
 }
 
 void JSDL::Engine::asyncDeserialize(const char* uri, ISerializable& d, callbackFunct callback){

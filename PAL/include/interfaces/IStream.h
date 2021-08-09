@@ -20,6 +20,8 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <functional>
+#include "../../../library/Status.h"
 
 namespace PAL {
 	class IStream {
@@ -41,6 +43,12 @@ namespace PAL {
 		* @return values of JSON data size.
 		*/
 		virtual std::size_t available() const = 0;
+
+		virtual JSDL::Status request(std::function<void(std::size_t)> callback, std::weak_ptr<PAL::IStream> obj) = 0;
+
+		//virtual std::size_t getData(std::function<void(std::size_t)> callback) = 0;
+
+		virtual std::size_t _available(std::function<void(std::size_t size)> callback) const = 0;
 		/**
 		* Return the size of buffer`s data.
 		*
@@ -50,6 +58,9 @@ namespace PAL {
 		/**
 		* Deleting a derived class object using a pointer to a base class.
 		*/
+
+		virtual JSDL::Status getStatus() const = 0;
+		
 		virtual ~IStream() {}
 	};
 }

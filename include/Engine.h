@@ -27,7 +27,9 @@ namespace JSDL {
 		* @param values JSON string data.
 		* @param values user`s object that would be filled with JSON string data
 		*/
-		void deserialize(const char* uri, ISerializable& d);
+		//void deserialize(const char* uri, ISerializable& d);
+
+		JSDL::Status deserialize(const char* uri, ISerializable& d);
 
 		void asyncDeserialize(const char* uri, ISerializable& d, callbackFunct callback);
 

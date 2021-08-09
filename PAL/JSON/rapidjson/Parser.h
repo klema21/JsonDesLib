@@ -130,7 +130,7 @@ namespace PAL {
 			}
 		};
 	public:
-		void parseStream(std::shared_ptr<PAL::IStream> is, JSDL::IEngine* e);
+		JSDL::Status parseStream(std::shared_ptr<PAL::IStream> is, JSDL::IEngine* e);
 	};
 }
 #endif

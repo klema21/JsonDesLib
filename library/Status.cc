@@ -1,8 +1,13 @@
 #include "Status.h"
 
+JSDL::Status::Status() {
+
+}
+
 JSDL::Status::Status(const std::string& url) : m_url(url) {
 	m_status = send_status::InProgress;
 	m_http_status = http_status::NO_STATUS;
+	m_object_status = object_status::Empty;
 }
 
 void JSDL::Status::setSendStatus(const std::string& msg) {
@@ -17,6 +22,10 @@ void JSDL::Status::setHTTPStatus(const std::string& status) {
 	else {
 		m_http_status = http_status::ERROR;
 	}
+}
+
+void JSDL::Status::setObjectStatus() {
+	m_object_status = object_status::Complete;
 }
 
 std::string JSDL::Status::what() const {
