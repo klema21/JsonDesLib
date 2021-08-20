@@ -6,14 +6,16 @@
 #include "../PAL/include/factories/ParserFactory.h"
 #include "../PAL/include/factories/StreamFactory.h"
 #include "../library/Status.h"
+#include "../library/ParserStatus.h"
 #include <stack>
 #include <future>
+#include <condition_variable>
+#include <mutex>
 #include <queue>
 
 namespace JSDL {
-	class EngineImpl : public IEngine {
+	class EngineImpl : public IEngine, public std::enable_shared_from_this<EngineImpl> {
 	public:
-		//void deserialize		 (const char* uri, ISerializable& object);
 		JSDL::Status deserialize (const char* uri, ISerializable& object);
 		void asyncDeserialize	 (const char* uri, ISerializable& object, callbackFunct callback);
 		void asyncDeserializeRun();
@@ -27,6 +29,16 @@ namespace JSDL {
 		std::stack<std::reference_wrapper<ISerializable>> data{};
 		std::queue<std::future<std::shared_ptr<PAL::IStream>>> asyncQueueData{};
 		std::queue<std::reference_wrapper<ISerializable>> asyncQueueObjects{};
+
+		std::mutex m;
+
+		JSDL::Status m_status;
+
+		std::shared_ptr<EngineImpl> getptr() {
+			//return shared_from_this();
+			return std::shared_ptr<EngineImpl>(this);
+		};
+
 	};
 }
 

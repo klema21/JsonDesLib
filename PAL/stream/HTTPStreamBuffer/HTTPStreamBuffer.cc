@@ -2,56 +2,31 @@
 
 PAL::HTTPStreamBuffer::HTTPStreamBuffer(const char* src) {
 	m_rqst.setUrl(src);
-	/*auto client = HTTPClientFactory::createHTTPClient();
-
-	af = std::async(std::launch::async, [=]() {
-		return client->sendRequest(m_rqst, m_rsp);
-	});
-	status = af.get();
-
-	if (status.m_status == JSDL::Status::send_status::Success &&
-		status.m_http_status == JSDL::Status::http_status::OK) {
-		m_size = m_rsp.getData().size();
-		m_buff = new char[m_size];
-		std::string tmp = m_rsp.getData();
-		std::copy(tmp.begin(), tmp.end(), m_buff);
-	}*/
-	/*if (m_callback != nullptr) {
-		m_callback(m_size);
-	}*/
 }
 
-JSDL::Status PAL::HTTPStreamBuffer::request(std::function<void(std::size_t)> callback, std::weak_ptr<PAL::IStream> obj) {
-	std::mutex m;
-	std::condition_variable cv;
-	std::thread threadObj([&]() {
-		std::unique_lock<std::mutex> lk(m);
+JSDL::Status PAL::HTTPStreamBuffer::request(std::function<void(std::size_t, JSDL::Status)> callback) {
+	threadOb = new std::thread([&, callback]() {
 		auto client = HTTPClientFactory::createHTTPClient();
-		status = client->sendRequest(m_rqst, m_rsp);
+		auto status = client->sendRequest(m_rqst, m_rsp);
+
 		if (status.m_status == JSDL::Status::send_status::Success &&
 			status.m_http_status == JSDL::Status::http_status::OK) {
+
 			m_size = m_rsp.getData().size();
 			m_buff = new char[m_size];
 			std::string tmp = m_rsp.getData();
 			std::copy(tmp.begin(), tmp.end(), m_buff);
 		}
 		if (callback != nullptr) {
-			callback(m_size);
+			callback(m_size, status);
 		}
-		if (auto spt = obj.lock()) {
-			
-		} else {
-			return status;
-		}
-		lk.unlock();
-		cv.notify_one();
 	});
-	
-	//threadObj.join();
-	return status;
+	return _status;
 }
 
 PAL::HTTPStreamBuffer::~HTTPStreamBuffer() {
+	threadOb->join();
+	delete threadOb;
 	delete[] m_buff;
 }
 
@@ -73,11 +48,8 @@ std::size_t PAL::HTTPStreamBuffer::available() const {
 	return m_size - m_curr;
 }
 
+
 std::size_t PAL::HTTPStreamBuffer::_available(std::function<void(std::size_t size)> callback) const {
-	/*if (m_size > 0) {
-		callback(m_size);
-	}*/
-	//m_callback = callback(m_size);
 	callback(m_size);
 	return m_size;
 }
@@ -86,6 +58,10 @@ std::size_t PAL::HTTPStreamBuffer::total() const {
 	return m_size;
 }
 
+std::size_t PAL::HTTPStreamBuffer::getData(std::size_t data) {
+	return data;
+}
+
 JSDL::Status PAL::HTTPStreamBuffer::getStatus() const {
-	return status;
+	return _status;
 }

@@ -11,9 +11,11 @@ namespace JSDL{
 		Status(const std::string& url);
 		void setSendStatus(const std::string& msg);
 		void setHTTPStatus(const std::string& status);
-		void setObjectStatus();
+		void setObjectErrorStatus(const std::string& msg);
+		void setObjectCompleteStatus(const std::string& msg);
 		std::string what() const;
 		std::string statusCode() const;
+		std::string parserStatus() const;
 
 		enum class send_status {
 			Success,
@@ -30,13 +32,14 @@ namespace JSDL{
 
 		enum class object_status {
 			Empty,
-			Complete
+			Complete,
+			Error
 		} m_object_status;
-
 	private:
 		std::string m_msg{};
 		std::string m_url{};
 		std::string m_http_response_status{};
+		std::string m_parser_status{};
 	};
 }
 

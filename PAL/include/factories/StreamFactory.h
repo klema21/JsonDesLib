@@ -10,9 +10,7 @@
 namespace PAL {
 	class StreamFactory {
 	public:
-		//static std::shared_ptr<PAL::IStream> makeStream(const char* uri, callbackFunct callback);
 		static std::shared_ptr<PAL::IStream> makeStream(const char* uri);
-		//static std::function<std::shared_ptr<PAL::IStream>(const char*, callbackFunct)> createStream;
 		static std::function<std::shared_ptr<PAL::IStream>(const char*)> createStream;
 	};
 }

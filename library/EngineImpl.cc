@@ -4,13 +4,32 @@ JSDL::Status JSDL::EngineImpl::deserialize(const char* uri, ISerializable& objec
 	data.push(object);
 	auto s = PAL::StreamFactory::createStream(uri);
 	auto p = PAL::ParserFactory::createParser();
-	JSDL::Status st;
-	std::weak_ptr<PAL::IStream> gw = s;
-	//std::weak_ptr<s.get()> sl;
-	s->request([&](std::size_t size) {
-		st = p->parseStream(s, this);
-	}, gw);
-	return st;
+	std::weak_ptr<JSDL::EngineImpl> wself = shared_from_this();
+	JSDL::Status fail_status;
+	std::condition_variable cv;
+	bool completed = false;
+	JSDL::Status st = s->request(
+		[&wself, &s, &fail_status, &completed, &cv](std::size_t size, JSDL::Status status) {
+		if (auto self = wself.lock()) {
+			std::unique_lock<std::mutex> lk(self->m);
+			fail_status = status;
+			if (status.m_status == JSDL::Status::send_status::Success &&
+				status.m_http_status == JSDL::Status::http_status::OK) {
+					completed = true;
+					cv.notify_one();
+			} else {
+				cv.notify_one();
+			}
+		}
+	});
+	std::unique_lock<std::mutex> lk(m);
+	cv.wait(lk);
+	if (completed) {
+		return p->parseStream(s, this);
+	} else {
+		fail_status.m_object_status = JSDL::Status::object_status::Error;
+		return fail_status;
+	}
 }
 
 void JSDL::EngineImpl::asyncDeserialize(

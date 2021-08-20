@@ -24,8 +24,14 @@ void JSDL::Status::setHTTPStatus(const std::string& status) {
 	}
 }
 
-void JSDL::Status::setObjectStatus() {
+void JSDL::Status::setObjectErrorStatus(const std::string& msg) {
+	m_object_status = object_status::Error;
+	m_parser_status += msg;
+}
+
+void JSDL::Status::setObjectCompleteStatus(const std::string& msg) {
 	m_object_status = object_status::Complete;
+	m_parser_status += msg;
 }
 
 std::string JSDL::Status::what() const {
@@ -34,4 +40,8 @@ std::string JSDL::Status::what() const {
 
 std::string JSDL::Status::statusCode() const {
 	return m_http_response_status;
+}
+
+std::string JSDL::Status::parserStatus() const {
+	return m_parser_status;
 }

@@ -44,9 +44,9 @@ namespace PAL {
 		*/
 		virtual std::size_t available() const = 0;
 
-		virtual JSDL::Status request(std::function<void(std::size_t)> callback, std::weak_ptr<PAL::IStream> obj) = 0;
+		virtual JSDL::Status request(std::function<void(std::size_t, JSDL::Status)> callback) = 0;
 
-		//virtual std::size_t getData(std::function<void(std::size_t)> callback) = 0;
+		virtual std::size_t getData(std::size_t data) = 0;
 
 		virtual std::size_t _available(std::function<void(std::size_t size)> callback) const = 0;
 		/**
