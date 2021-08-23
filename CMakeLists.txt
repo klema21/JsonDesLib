@@ -9,7 +9,7 @@ endif (WIN32)
 if (UNIX)
 	#	-Werror -fsanitize=thread
 	#add_compile_options(-Wall -Wextra -pedantic -pthread -fsanitize=address -O2)
-	add_compile_options(-Wall -Wextra -pedantic -pthread -pthread -O2)
+	add_compile_options(-Wall -Wextra -pedantic -pthread -pthread -O1)
 	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 	option(CURL "Use libcurl" ON)
 endif (UNIX)
